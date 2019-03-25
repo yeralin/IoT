@@ -56,6 +56,16 @@ api:
               - delay: 3s
 
 sensor:
+  - platform: template
+    name: "Pet feeder interval"
+    lambda: |-
+      return id(feeder_interval);
+    update_interval: 10s
+  - platform: template
+    name: "Pet feeder target weight"
+    lambda: |-
+      return id(target_weight);
+    update_interval: 10s
   - platform: custom
     lambda: |-
       auto weight_sensor = new CrowtailWeightSensor();

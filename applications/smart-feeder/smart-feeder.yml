@@ -1,0 +1,99 @@
+esphome:
+  name: smart_feeder
+  platform: ESP8266
+  board: nodemcuv2
+  includes:
+    - crowtail_weight_sensor.h
+
+globals:
+  - id: target_weight # in grams
+    type: int
+    restore_value: yes
+    initial_value: '30'
+  - id: feeder_interval # in hours
+    type: int
+    restore_value: yes
+    initial_value: '5'
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+logger:
+
+ota:
+
+api:
+  services:
+    - service: change_target_weight
+      variables:
+        new_target_weight: int
+      then:
+        - lambda: |-
+            id(target_weight) = new_target_weight;
+            ESP_LOGD(TAG, "New target weight: %i", id(target_weight));
+    - service: change_feed_interval
+      variables:
+        new_feed_interval: int
+      then:
+        - lambda: |-
+            id(feeder_interval) = new_feed_interval;
+            ESP_LOGD(TAG, "New feed interval: %i", id(feeder_interval));
+    - service: refill_food
+      then:
+        - while:
+            condition:
+              lambda: |-
+                return id(crowtail_weight_sensor).state <= id(target_weight);
+            then:
+              - servo.write:
+                  id: pet_feeder
+                  level: -100.0%
+              - delay: 3s
+              - servo.write:
+                  id: pet_feeder
+                  level: 100.0%
+              - delay: 3s
+
+sensor:
+  - platform: custom
+    lambda: |-
+      auto weight_sensor = new CrowtailWeightSensor();
+      App.register_component(weight_sensor);
+      return {weight_sensor};
+    sensors:
+      name: "Weight Sensor"
+      id: crowtail_weight_sensor
+      unit_of_measurement: gram
+  - platform: uptime
+    id: uptime_sensor
+    update_interval: 1h
+    on_value:
+      then:
+      - while:
+          condition:
+            and:
+              - lambda: |-
+                  return id(crowtail_weight_sensor).state <= id(target_weight);
+              - lambda: |- # Rounding float seconds to the nearest int hour
+                  int roundToHour = id(uptime_sensor).state/3600 + 0.5;
+                  return (roundToHour % id(feeder_interval)) == 0;
+          then:
+            - servo.write:
+                id: pet_feeder
+                level: -100.0%
+            - delay: 3s
+            - servo.write:
+                id: pet_feeder
+                level: 100.0%
+            - delay: 3s
+
+servo:
+  - id: pet_feeder
+    output: pwm_output
+
+output:
+  - platform: esp8266_pwm
+    id: pwm_output
+    pin: D5
+    frequency: 50 Hz

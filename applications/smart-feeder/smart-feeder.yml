@@ -26,22 +26,35 @@ logger:
 
 ota:
 
+script:
+  - id: perform_rotation
+    then:
+      - servo.write:
+          id: pet_feeder
+          level: -100.0%
+      - delay: 2s
+      - servo.write:
+          id: pet_feeder
+          level: 100.0%
+      - delay: 2s
+      - lambda: id(performed_rotations) += 1;
+
 api:
   services:
+    # Update weight and time period of the feeder
     - service: change_target_weight
       variables:
         new_target_weight: int
       then:
         - lambda: |-
             id(target_weight) = new_target_weight;
-            ESP_LOGD(TAG, "New target weight: %i", id(target_weight));
     - service: change_feed_interval
       variables:
         new_feed_interval: int
       then:
         - lambda: |-
             id(feeder_interval) = new_feed_interval;
-            ESP_LOGD(TAG, "New feed interval: %i", id(feeder_interval));
+    # Manual feeder trigger through HA
     - service: refill_food
       then:
         - while:
@@ -51,17 +64,24 @@ api:
               - lambda: |-
                   return id(performed_rotations) < 10;
             then:
-              - servo.write:
-                  id: pet_feeder
-                  level: -100.0%
-              - delay: 3s
-              - servo.write:
-                  id: pet_feeder
-                  level: 100.0%
-              - delay: 3s
-              - lambda: id(performed_rotations) += 1;
+              - script.execute: perform_rotation
+        - lambda: |-
+            if(id(performed_rotations) < 10) {
+              id(performed_rotations) = 0;
+            }
 
 sensor:
+  # Custom weight sensor
+  - platform: custom
+    lambda: |-
+      auto weight_sensor = new CrowtailWeightSensor();
+      App.register_component(weight_sensor);
+      return {weight_sensor};
+    sensors:
+      name: "Weight Sensor"
+      id: crowtail_weight_sensor
+      unit_of_measurement: gram
+  # Template sensors to communicate values to HA
   - platform: template
     name: "Pet feeder interval"
     lambda: |-
@@ -79,15 +99,7 @@ sensor:
         return true;
       }
       return id(is_feeder_broken).state;
-  - platform: custom
-    lambda: |-
-      auto weight_sensor = new CrowtailWeightSensor();
-      App.register_component(weight_sensor);
-      return {weight_sensor};
-    sensors:
-      name: "Weight Sensor"
-      id: crowtail_weight_sensor
-      unit_of_measurement: gram
+  # Uptime sensor to execute feeder on fixed time interval
   - platform: uptime
     id: uptime_sensor
     update_interval: 1h
@@ -104,15 +116,11 @@ sensor:
               - lambda: |-
                   return id(performed_rotations) < 10;
           then:
-            - servo.write:
-                id: pet_feeder
-                level: -100.0%
-            - delay: 3s
-            - servo.write:
-                id: pet_feeder
-                level: 100.0%
-            - delay: 3s
-            - lambda: id(performed_rotations) += 1;
+            - script.execute: perform_rotation
+      - lambda: |-
+          if(id(performed_rotations) < 10) {
+            id(performed_rotations) = 0;
+          }
 
 servo:
   - id: pet_feeder

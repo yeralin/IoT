@@ -78,6 +78,11 @@ sensor:
       unit_of_measurement: gram
   # Template sensors to communicate values to HA
   - platform: template
+    name: "Hours since last feed"
+    lambda: |-
+      int roundToHour = id(uptime_sensor).state/3600 + 0.5;
+      return roundToHour % id(feeder_interval);
+  - platform: template
     name: "Pet feeder interval"
     lambda: |-
       return id(feeder_interval);

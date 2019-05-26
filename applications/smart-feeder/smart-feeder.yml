@@ -99,6 +99,12 @@ sensor:
         return true;
       }
       return id(is_feeder_broken).state;
+  - platform: template
+    name: "Hours since last feed"
+    id: hours_since_last_feed
+    lambda: |- # Rounding float seconds to the nearest int hour
+      int roundToHour = id(uptime_sensor).state/3600 + 0.5;
+      return roundToHour % id(feeder_interval);
   # Uptime sensor to execute feeder on fixed time interval
   - platform: uptime
     id: uptime_sensor

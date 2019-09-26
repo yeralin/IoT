@@ -1,5 +1,4 @@
 #include "esphome.h"
-#include "esphome/log.h"
 
 using namespace esphome;
 static const char *TAG = "sensor.crowtail_weight_sensor";

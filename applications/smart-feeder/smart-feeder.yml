@@ -17,6 +17,9 @@ globals:
   - id: performed_rotations
     type: int
     initial_value: '0'
+  - id: is_feeder_broken
+    type: bool
+    initial_value: 'false'
 
 wifi:
   ssid: !secret wifi_ssid
@@ -25,6 +28,34 @@ wifi:
 logger:
 
 ota:
+
+script:
+ - id: feed
+   then:
+      - while:
+          condition:
+            - lambda: |-
+                return id(performed_rotations) < 10;
+            - lambda: |-
+                return id(crowtail_weight_sensor).state <= id(target_weight);
+          then:
+            - logger.log: "Triggered"
+            - servo.write:
+                id: pet_feeder
+                level: -100.0%
+            - delay: 2s
+            - servo.write:
+                id: pet_feeder
+                level: 100.0%
+            - delay: 2s
+            - lambda: id(performed_rotations) += 1;
+      - lambda: |-
+          if(id(performed_rotations) >= 10) {
+            id(is_feeder_broken) = true;
+          } else {
+            id(is_feeder_broken) = false;
+          }
+          id(performed_rotations) = 0;
 
 api:
   services:
@@ -44,26 +75,7 @@ api:
     # Manual feeder trigger through HA
     - service: refill_food
       then:
-        - while:
-            condition:
-              - lambda: |-
-                  return id(crowtail_weight_sensor).state <= id(target_weight);
-              - lambda: |-
-                  return id(performed_rotations) < 10;
-            then: # externalize into a script once while loop start supporting them
-              - servo.write:
-                  id: pet_feeder
-                  level: -100.0%
-              - delay: 2s
-              - servo.write:
-                  id: pet_feeder
-                  level: 100.0%
-              - delay: 2s
-              - lambda: id(performed_rotations) += 1;
-        - lambda: |-
-            if(id(performed_rotations) < 10) {
-              id(performed_rotations) = 0;
-            }
+        - script.execute: feed
 
 sensor:
   # Custom weight sensor
@@ -79,62 +91,39 @@ sensor:
   # Template sensors to communicate values to HA
   - platform: template
     name: "Hours since last feed"
-    lambda: |-
+    update_interval: 5min
+    id: hours_since_last_feed
+    lambda: |- # Rounding float seconds to the nearest int hour
       int roundToHour = id(uptime_sensor).state/3600 + 0.5;
       return roundToHour % id(feeder_interval);
   - platform: template
     name: "Pet feeder interval"
+    update_interval: 5min
     lambda: |-
       return id(feeder_interval);
   - platform: template
     name: "Pet feeder target weight"
     lambda: |-
-      return id(target_weight);
+      return id(target_weight);  
   - platform: template
+    update_interval: 10min
     name: "Is feeder broken"
-    id: is_feeder_broken
+    id: is_feeder_broken_sensor
     lambda: |-
-      if (id(performed_rotations) >= 10) {
-        id(performed_rotations) = 0;
-        return true;
-      }
-      return id(is_feeder_broken).state;
-  - platform: template
-    name: "Hours since last feed"
-    id: hours_since_last_feed
-    lambda: |- # Rounding float seconds to the nearest int hour
-      int roundToHour = id(uptime_sensor).state/3600 + 0.5;
-      return roundToHour % id(feeder_interval);
+      return id(is_feeder_broken);
   # Uptime sensor to execute feeder on fixed time interval
   - platform: uptime
     id: uptime_sensor
-    update_interval: 1h
+    update_interval: 60min
     on_value:
       then:
-      - while:
+      - if:
           condition:
-            and:
-              - lambda: |-
-                  return id(crowtail_weight_sensor).state <= id(target_weight);
-              - lambda: |- # Rounding float seconds to the nearest int hour
-                  int roundToHour = id(uptime_sensor).state/3600 + 0.5;
-                  return (roundToHour % id(feeder_interval)) == 0;
-              - lambda: |-
-                  return id(performed_rotations) < 10;
-          then: # externalize into a script once while loop start supporting them
-            - servo.write:
-                id: pet_feeder
-                level: -100.0%
-            - delay: 2s
-            - servo.write:
-                id: pet_feeder
-                level: 100.0%
-            - delay: 2s
-            - lambda: id(performed_rotations) += 1;
-      - lambda: |-
-          if(id(performed_rotations) < 10) {
-            id(performed_rotations) = 0;
-          }
+            - lambda: |- # Rounding float seconds to the nearest int hour
+                int roundToHour = id(uptime_sensor).state/3600 + 0.5;
+                return (roundToHour % id(feeder_interval)) == 0;
+          then:
+            - script.execute: feed
 
 servo:
   - id: pet_feeder

@@ -58,6 +58,7 @@ script:
           id(performed_rotations) = 0;
 
 api:
+  reboot_timeout: 0s
   services:
     # Update weight and time period of the feeder
     - service: change_target_weight

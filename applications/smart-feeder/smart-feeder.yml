@@ -14,6 +14,10 @@ globals:
     type: int
     restore_value: yes
     initial_value: '5'
+  - id: hours_since_last_feed
+    type: int
+    restore_value: yes
+    initial_value: '0'
   - id: performed_rotations
     type: int
     initial_value: '0'
@@ -43,7 +47,6 @@ script:
             - lambda: |-
                 return id(crowtail_weight_sensor).state <= id(target_weight);
           then:
-            - logger.log: "Triggered"
             - servo.write:
                 id: pet_feeder
                 level: -100.0%
@@ -69,19 +72,16 @@ api:
       variables:
         new_target_weight: int
       then:
-        - lambda: |-
-            id(target_weight) = new_target_weight;
+        - lambda: 'id(target_weight) = new_target_weight;'
     - service: change_feed_interval
       variables:
         new_feed_interval: int
       then:
-        - lambda: |-
-            id(feeder_interval) = new_feed_interval;
+        - lambda: 'id(feeder_interval) = new_feed_interval;'
     # Turn On/Off automatic feeding
     - service: toggle_automatic_feeding
       then:
-        - lambda: |-
-            id(is_auto_feeding_on) = id(is_auto_feeding_on) ^ true;
+        - lambda: 'id(is_auto_feeding_on) = id(is_auto_feeding_on) ^ true;'
     # Manual feeder trigger through HA
     - service: refill_food
       then:
@@ -101,47 +101,41 @@ sensor:
   # Template sensors to communicate values to HA
   - platform: template
     name: "Hours since last feed"
-    update_interval: 5min
-    id: hours_since_last_feed
-    lambda: |- # Rounding float seconds to the nearest int hour
-      int roundToHour = id(uptime_sensor).state/3600 + 0.5;
-      return roundToHour % id(feeder_interval);
+    lambda: 'return id(hours_since_last_feed);'
   - platform: template
     name: "Pet feeder interval"
-    update_interval: 5min
-    lambda: |-
-      return id(feeder_interval);
+    lambda: 'return id(feeder_interval);'
   - platform: template
     name: "Pet feeder target weight"
-    lambda: |-
-      return id(target_weight);  
+    lambda: 'return id(target_weight);'
   - platform: template
-    update_interval: 10min
     name: "Is feeder broken"
-    id: is_feeder_broken_sensor
-    lambda: |-
-      return id(is_feeder_broken);
-  - platform: template
-    update_interval: 10min
-    name: "Is automatic feeding on"
-    id: is_automatic_feeding_on
-    lambda: |-
-      return id(is_auto_feeding_on);
-  # Uptime sensor to execute feeder on fixed time interval
-  - platform: uptime
-    id: uptime_sensor
-    update_interval: 60min
+    lambda: 'return id(is_feeder_broken);'
     on_value:
       then:
-      - if:
-          condition:
-            - lambda: |- # Skip if auto feeding is off
-                return id(is_auto_feeding_on);
-            - lambda: |- # Rounding float seconds to the nearest int hour
-                int roundToHour = id(uptime_sensor).state/3600 + 0.5;
-                return (roundToHour % id(feeder_interval)) == 0;
-          then:
-            - script.execute: feed
+       - lambda: |-
+           if (id(is_feeder_broken) == false) {
+             id(is_auto_feeding_on) = true;
+           }
+  - platform: template
+    name: "Is automatic feeding on"
+    lambda: 'return id(is_auto_feeding_on);'
+
+interval:
+ - interval: 1h
+   then:
+    - if:
+        condition:
+          - lambda: 'return id(feeder_interval) <= id(hours_since_last_feed);'
+        then:
+         - lambda: 'id(hours_since_last_feed) = 0;'
+         - if:
+             condition:
+               lambda: 'return id(is_auto_feeding_on);' # Skip if auto feeding is off
+             then:
+               script.execute: feed
+        else:
+          - lambda: 'id(hours_since_last_feed) += 1;'
 
 servo:
   - id: pet_feeder

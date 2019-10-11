@@ -20,6 +20,10 @@ globals:
   - id: is_feeder_broken
     type: bool
     initial_value: 'false'
+  - id: is_auto_feeding_on
+    type: bool
+    initial_value: 'true'
+
 
 wifi:
   ssid: !secret wifi_ssid
@@ -73,6 +77,11 @@ api:
       then:
         - lambda: |-
             id(feeder_interval) = new_feed_interval;
+    # Turn On/Off automatic feeding
+    - service: toggle_automatic_feeding
+      then:
+        - lambda: |-
+            id(is_auto_feeding_on) = id(is_auto_feeding_on) ^ true;
     # Manual feeder trigger through HA
     - service: refill_food
       then:
@@ -112,6 +121,12 @@ sensor:
     id: is_feeder_broken_sensor
     lambda: |-
       return id(is_feeder_broken);
+  - platform: template
+    update_interval: 10min
+    name: "Is automatic feeding on"
+    id: is_automatic_feeding_on
+    lambda: |-
+      return id(is_auto_feeding_on);
   # Uptime sensor to execute feeder on fixed time interval
   - platform: uptime
     id: uptime_sensor
@@ -120,6 +135,8 @@ sensor:
       then:
       - if:
           condition:
+            - lambda: |- # Skip if auto feeding is off
+                return id(is_auto_feeding_on);
             - lambda: |- # Rounding float seconds to the nearest int hour
                 int roundToHour = id(uptime_sensor).state/3600 + 0.5;
                 return (roundToHour % id(feeder_interval)) == 0;

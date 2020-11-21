@@ -3,7 +3,7 @@
 using namespace esphome;
 static const char *TAG = "sensor.crowtail_weight_sensor";
 
-static const long BOWL_ZERO_WEIGHT = 8264430;
+static const long BOWL_ZERO_WEIGHT = 8261600;
 
 class CrowtailWeightSensor : public PollingComponent, public sensor::Sensor
 {
@@ -81,7 +81,9 @@ public:
 
   float getGram()
   {
-    long val = (averageValue() - _offset);
+    long avgValue = averageValue();
+    long val = (avgValue - _offset);
+    //ESP_LOGI("debug", "%d", avgValue);
     return (float) (val / _scale * 5 / 3);
   }
 };

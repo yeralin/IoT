@@ -23,6 +23,6 @@ switch:
     icon: "mdi:icon-building"
     turn_on_action:
     - switch.turn_on: relay
-    - delay: 5000ms
+    - delay: 10000ms
     - switch.turn_off: relay
 

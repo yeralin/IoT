@@ -27,6 +27,10 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
+.esphome
+.pio*
+src/
+platformio.ini
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

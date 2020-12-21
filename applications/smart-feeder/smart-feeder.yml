@@ -50,15 +50,11 @@ script:
             - servo.write:
                 id: pet_feeder
                 level: -100.0%
-            - delay: 1.5s
+            - delay: 2s
             - servo.write:
                 id: pet_feeder
                 level: 100.0%
-            - delay: 300ms
-            - servo.write:
-                id: pet_feeder
-                level: 0.0%
-            - delay: 5s
+            - delay: 2s
             - lambda: id(performed_rotations) += 1;
       - lambda: |-
           if(id(performed_rotations) >= 10) {
@@ -148,5 +144,5 @@ servo:
 output:
   - platform: esp8266_pwm
     id: pwm_output
-    pin: D0
+    pin: D5
     frequency: 50 Hz

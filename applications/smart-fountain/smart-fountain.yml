@@ -56,6 +56,11 @@ switch:
     id: water_pump
     restore_mode: ALWAYS_OFF
 
+sensor:
+  - platform: template
+    name: "Is fountain broken"
+    lambda: return id(is_fountain_broken);
+
 binary_sensor:
   - platform: gpio
     pin: GPIO26

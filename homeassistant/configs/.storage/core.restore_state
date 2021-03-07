@@ -1,0 +1,541 @@
+{
+    "version": 1,
+    "key": "core.restore_state",
+    "data": [
+        {
+            "state": {
+                "entity_id": "timer.cat_detected",
+                "state": "idle",
+                "attributes": {
+                    "duration": "1:00:00",
+                    "editable": false
+                },
+                "last_changed": "2021-03-07T18:22:51.201048+00:00",
+                "last_updated": "2021-03-07T18:22:51.201048+00:00",
+                "context": {
+                    "id": "87108fd671831c1d79a4c4c3102662ef",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "input_number.water_interval",
+                "state": "1.0",
+                "attributes": {
+                    "initial": null,
+                    "editable": false,
+                    "min": 1.0,
+                    "max": 24.0,
+                    "step": 1.0,
+                    "mode": "slider",
+                    "friendly_name": "Water interval"
+                },
+                "last_changed": "2021-03-07T18:22:52.519355+00:00",
+                "last_updated": "2021-03-07T18:22:52.519355+00:00",
+                "context": {
+                    "id": "cc8e13a53157bb674d99364822bba0ed",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "input_number.water_duration",
+                "state": "1.0",
+                "attributes": {
+                    "initial": null,
+                    "editable": false,
+                    "min": 1.0,
+                    "max": 6.0,
+                    "step": 1.0,
+                    "mode": "slider",
+                    "friendly_name": "Water duration"
+                },
+                "last_changed": "2021-03-07T18:22:52.519955+00:00",
+                "last_updated": "2021-03-07T18:22:52.519955+00:00",
+                "context": {
+                    "id": "09a0b0baf7025327032284fe795cc0e1",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "input_number.feeder_interval",
+                "state": "5.0",
+                "attributes": {
+                    "initial": null,
+                    "editable": false,
+                    "min": 1.0,
+                    "max": 24.0,
+                    "step": 1.0,
+                    "mode": "slider",
+                    "unit_of_measurement": "hours",
+                    "friendly_name": "Feeder interval"
+                },
+                "last_changed": "2021-03-07T18:22:52.520378+00:00",
+                "last_updated": "2021-03-07T18:22:52.520378+00:00",
+                "context": {
+                    "id": "2ae14a4f017e677ea56e0807cfa0af31",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "input_number.feeder_food_weight",
+                "state": "14.0",
+                "attributes": {
+                    "initial": null,
+                    "editable": false,
+                    "min": 1.0,
+                    "max": 100.0,
+                    "step": 1.0,
+                    "mode": "slider",
+                    "unit_of_measurement": "grams",
+                    "friendly_name": "Feeder food weight"
+                },
+                "last_changed": "2021-03-07T18:22:52.520781+00:00",
+                "last_updated": "2021-03-07T18:22:52.520781+00:00",
+                "context": {
+                    "id": "2e4c1a564464ce61faee33f38fd0666f",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "input_boolean.daniyar_home",
+                "state": "on",
+                "attributes": {
+                    "editable": false,
+                    "friendly_name": "Daniyar Home",
+                    "hidden": true
+                },
+                "last_changed": "2021-03-07T18:22:52.521127+00:00",
+                "last_updated": "2021-03-07T18:22:52.521127+00:00",
+                "context": {
+                    "id": "3c840ec4a8efc50c54cfe07c0cb6fb45",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "automation.pet_feeder_interval",
+                "state": "on",
+                "attributes": {
+                    "last_triggered": "2021-03-06T04:15:50.675958+00:00",
+                    "mode": "single",
+                    "current": 0,
+                    "friendly_name": "Pet Feeder Interval"
+                },
+                "last_changed": "2021-03-07T18:22:56.204233+00:00",
+                "last_updated": "2021-03-07T18:22:56.204233+00:00",
+                "context": {
+                    "id": "4e03bb706fa9b6c3c5659cc92f4147c9",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "automation.pet_feeder_weight",
+                "state": "on",
+                "attributes": {
+                    "last_triggered": "2021-03-06T04:15:50.677470+00:00",
+                    "mode": "single",
+                    "current": 0,
+                    "friendly_name": "Pet Feeder Weight"
+                },
+                "last_changed": "2021-03-07T18:22:56.205070+00:00",
+                "last_updated": "2021-03-07T18:22:56.205070+00:00",
+                "context": {
+                    "id": "b4a3496c084faffc5a5987251a8446af",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "automation.water_plant",
+                "state": "on",
+                "attributes": {
+                    "last_triggered": "2021-03-07T18:00:00.016587+00:00",
+                    "mode": "single",
+                    "current": 0,
+                    "friendly_name": "Water plant"
+                },
+                "last_changed": "2021-03-07T18:22:56.205791+00:00",
+                "last_updated": "2021-03-07T18:22:56.205791+00:00",
+                "context": {
+                    "id": "1a4060bbc5d701d9621244c3c6523d2f",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "automation.plant_waterer_interval_update",
+                "state": "on",
+                "attributes": {
+                    "last_triggered": null,
+                    "mode": "single",
+                    "current": 0,
+                    "friendly_name": "Plant waterer Interval Update"
+                },
+                "last_changed": "2021-03-07T18:22:56.233461+00:00",
+                "last_updated": "2021-03-07T18:22:56.233461+00:00",
+                "context": {
+                    "id": "ad4765af10d018b9a8c956d5f91e7e70",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "automation.plant_waterer_duration_update",
+                "state": "on",
+                "attributes": {
+                    "last_triggered": null,
+                    "mode": "single",
+                    "current": 0,
+                    "friendly_name": "Plant waterer Duration Update"
+                },
+                "last_changed": "2021-03-07T18:22:56.234384+00:00",
+                "last_updated": "2021-03-07T18:22:56.234384+00:00",
+                "context": {
+                    "id": "86d0136a1a4d8b2814fae4966095a966",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "automation.send_video_once_cat_is_detected",
+                "state": "on",
+                "attributes": {
+                    "last_triggered": "2021-01-04T11:16:07.695584+00:00",
+                    "mode": "single",
+                    "current": 0,
+                    "friendly_name": "Send video once cat is detected"
+                },
+                "last_changed": "2021-03-07T18:22:56.235956+00:00",
+                "last_updated": "2021-03-07T18:22:56.235956+00:00",
+                "context": {
+                    "id": "358a4d381972ad36667f34478ae89f2c",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "automation.on_tv_turn_on_switch_to_pc_hdmi",
+                "state": "on",
+                "attributes": {
+                    "last_triggered": null,
+                    "mode": "single",
+                    "current": 0,
+                    "friendly_name": "On TV turn on switch to PC HDMI"
+                },
+                "last_changed": "2021-03-07T18:22:56.237982+00:00",
+                "last_updated": "2021-03-07T18:22:56.237982+00:00",
+                "context": {
+                    "id": "cb6d0f777d33182a750958557f3dc268",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "automation.turn_on_lights_when_come_home",
+                "state": "off",
+                "attributes": {
+                    "last_triggered": null,
+                    "mode": "single",
+                    "current": 0,
+                    "friendly_name": "Turn on lights when come home"
+                },
+                "last_changed": "2021-03-07T18:22:56.238751+00:00",
+                "last_updated": "2021-03-07T18:22:56.238751+00:00",
+                "context": {
+                    "id": "1b32d176a6e97530e62a321460527ec5",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "automation.turn_off_lights_when_left",
+                "state": "off",
+                "attributes": {
+                    "last_triggered": null,
+                    "mode": "single",
+                    "current": 0,
+                    "friendly_name": "Turn off lights when left"
+                },
+                "last_changed": "2021-03-07T18:22:56.239260+00:00",
+                "last_updated": "2021-03-07T18:22:56.239260+00:00",
+                "context": {
+                    "id": "ad0555cefa102e682c1b52446de7ecd6",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "automation.christmas_lights_after_sunset",
+                "state": "on",
+                "attributes": {
+                    "last_triggered": "2021-03-06T22:51:52.027840+00:00",
+                    "mode": "single",
+                    "current": 0,
+                    "friendly_name": "Christmas lights after sunset"
+                },
+                "last_changed": "2021-03-07T18:22:56.241060+00:00",
+                "last_updated": "2021-03-07T18:22:56.241060+00:00",
+                "context": {
+                    "id": "1e320f9e138d7c5ced0f357d987ec26e",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "automation.daniyar_yeralin_home_beacon_based",
+                "state": "on",
+                "attributes": {
+                    "last_triggered": null,
+                    "mode": "single",
+                    "current": 0,
+                    "friendly_name": "Daniyar Yeralin Home Beacon-based"
+                },
+                "last_changed": "2021-03-07T18:22:56.242179+00:00",
+                "last_updated": "2021-03-07T18:22:56.242179+00:00",
+                "context": {
+                    "id": "d1a422fb8809b1d0bea290f6a51eabbe",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "automation.daniyar_yeralin_away_beacon_based",
+                "state": "on",
+                "attributes": {
+                    "last_triggered": null,
+                    "mode": "single",
+                    "current": 0,
+                    "friendly_name": "Daniyar Yeralin Away Beacon-based"
+                },
+                "last_changed": "2021-03-07T18:22:56.243361+00:00",
+                "last_updated": "2021-03-07T18:22:56.243361+00:00",
+                "context": {
+                    "id": "c7b3392bed2630015851332986ff7629",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "automation.daniyar_yeralin_home_iphone_based",
+                "state": "on",
+                "attributes": {
+                    "last_triggered": null,
+                    "mode": "single",
+                    "current": 0,
+                    "friendly_name": "Daniyar Yeralin Home iPhone-based"
+                },
+                "last_changed": "2021-03-07T18:22:56.244500+00:00",
+                "last_updated": "2021-03-07T18:22:56.244500+00:00",
+                "context": {
+                    "id": "d41e0bbe7da54e7ed0bb5de090252254",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "automation.daniyar_yeralin_away_iphone_based",
+                "state": "on",
+                "attributes": {
+                    "last_triggered": null,
+                    "mode": "single",
+                    "current": 0,
+                    "friendly_name": "Daniyar Yeralin Away iPhone-based"
+                },
+                "last_changed": "2021-03-07T18:22:56.245841+00:00",
+                "last_updated": "2021-03-07T18:22:56.245841+00:00",
+                "context": {
+                    "id": "ebb6bd2ced89e8c959e6ee7302617a35",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "automation.ifttt_robovacuum_general",
+                "state": "on",
+                "attributes": {
+                    "last_triggered": "2020-04-10T19:21:58.515756+00:00",
+                    "mode": "single",
+                    "current": 0,
+                    "friendly_name": "IFTTT Robovacuum general"
+                },
+                "last_changed": "2021-03-07T18:22:56.247179+00:00",
+                "last_updated": "2021-03-07T18:22:56.247179+00:00",
+                "context": {
+                    "id": "3ee293cac1e036e67084c76b53de09a2",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "automation.ifttt_robovacuum_clean_location",
+                "state": "on",
+                "attributes": {
+                    "last_triggered": "2020-05-30T15:16:14.302439+00:00",
+                    "mode": "single",
+                    "current": 0,
+                    "friendly_name": "IFTTT Robovacuum clean location"
+                },
+                "last_changed": "2021-03-07T18:22:56.248015+00:00",
+                "last_updated": "2021-03-07T18:22:56.248015+00:00",
+                "context": {
+                    "id": "60447ab17576194ef6ce8d13e9b58ea2",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "automation.might_rain_today",
+                "state": "on",
+                "attributes": {
+                    "last_triggered": "2021-02-27T13:00:00.007385+00:00",
+                    "mode": "single",
+                    "current": 0,
+                    "friendly_name": "Might rain today"
+                },
+                "last_changed": "2021-03-07T18:22:56.248729+00:00",
+                "last_updated": "2021-03-07T18:22:56.248729+00:00",
+                "context": {
+                    "id": "a0733be948785ab3e61b3927a3491e98",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "automation.telegram_dismiss",
+                "state": "on",
+                "attributes": {
+                    "last_triggered": null,
+                    "mode": "single",
+                    "current": 0,
+                    "friendly_name": "Telegram: Dismiss"
+                },
+                "last_changed": "2021-03-07T18:22:56.249491+00:00",
+                "last_updated": "2021-03-07T18:22:56.249491+00:00",
+                "context": {
+                    "id": "07c15eb477d1906e4180724b0adecdc7",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "device_tracker.armor_x5",
+                "state": "unknown",
+                "attributes": {
+                    "source_type": "gps",
+                    "friendly_name": "Armor X5"
+                },
+                "last_changed": "2021-03-07T18:23:01.496365+00:00",
+                "last_updated": "2021-03-07T18:23:01.496365+00:00",
+                "context": {
+                    "id": "afa2135879b6d4f82552e99fdf376828",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        },
+        {
+            "state": {
+                "entity_id": "device_tracker.dans_iphone_2",
+                "state": "not_home",
+                "attributes": {
+                    "source_type": "gps",
+                    "battery_level": 68,
+                    "latitude": 42.86773681640625,
+                    "longitude": -76.98500521488207,
+                    "gps_accuracy": 7,
+                    "altitude": 156.78448486328125,
+                    "course": 192,
+                    "speed": 0,
+                    "vertical_accuracy": 8,
+                    "friendly_name": "Dan\u2019s iPhone"
+                },
+                "last_changed": "2021-03-07T18:23:01.497609+00:00",
+                "last_updated": "2021-03-07T18:23:01.497609+00:00",
+                "context": {
+                    "id": "5419ecbf35710e93d7dae6f0675a2af6",
+                    "parent_id": null,
+                    "user_id": null
+                }
+            },
+            "last_seen": "2021-03-07T18:23:10.432765+00:00"
+        }
+    ]
+}

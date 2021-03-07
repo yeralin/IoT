@@ -1,0 +1,15 @@
+[Unit]
+Description=Radarr Container
+After=docker.service
+Requires=docker.service
+
+[Service]
+User=daniyar
+Group=daniyar
+Restart=always
+ExecStartPre=-/usr/bin/docker stop radarr
+ExecStart=/usr/bin/docker start -a radarr
+ExecStop=/usr/bin/docker stop radarr
+
+[Install]
+WantedBy=multi-user.target

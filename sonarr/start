@@ -1,0 +1,11 @@
+docker run -d \
+  --name=sonarr \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=Americas/New_York \
+  -p 7879:8989 \
+  -v /home/daniyar/system/sonarr/config:/config \
+  -v /home/daniyar/media/tv-shows:/tv \
+  -v /home/daniyar/media:/downloads \
+  --restart unless-stopped \
+  linuxserver/sonarr:preview

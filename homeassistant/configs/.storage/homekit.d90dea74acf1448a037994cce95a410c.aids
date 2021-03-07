@@ -1,0 +1,16 @@
+{
+    "version": 1,
+    "key": "homekit.d90dea74acf1448a037994cce95a410c.aids",
+    "data": {
+        "allocations": {
+            "script.pet_feeder": 784683169,
+            "script.fountain_refill": 748273753,
+            "switch.pc": 1692054700,
+            "webostv.media_player.76fb40e99eff0144c066ebae9e9939a1": 896128435,
+            "esphome.switch.smart_intercomswitchintercom": 2266655786,
+            "lifx.light.d0:73:d5:25:c3:10": 933896507,
+            "lifx.light.d0:73:d5:2c:51:47": 1226211705,
+            "wemo.switch.221704K0101FF1": 474959973
+        }
+    }
+}

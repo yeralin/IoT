@@ -1,0 +1,8 @@
+{
+    "data": {
+        "users": [
+        ]
+    },
+    "key": "auth_provider.homeassistant",
+    "version": 1
+}

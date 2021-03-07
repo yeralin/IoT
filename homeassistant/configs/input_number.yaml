@@ -1,0 +1,22 @@
+water_interval:
+  name: "Water interval"
+  min: 1
+  max: 24
+  step: 1
+water_duration:
+  name: "Water duration"
+  min: 1
+  max: 6
+  step: 1
+feeder_interval:
+  name: "Feeder interval"
+  min: 1
+  max: 24
+  step: 1
+  unit_of_measurement: "hours"
+feeder_food_weight:
+  name: "Feeder food weight"
+  min: 1
+  max: 100
+  step: 1
+  unit_of_measurement: "grams"

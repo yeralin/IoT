@@ -1,0 +1,76 @@
+- alias: 'Daniyar Yeralin Home Beacon-based'
+  initial_state: true 
+  trigger:
+    platform: state
+    entity_id: sensor.beacon_sensor
+    from: 'not_home'
+    to: 'Living room'
+  condition:
+    condition: and
+    conditions:
+     - condition: state
+       entity_id: input_boolean.daniyar_home
+       state: 'off'
+  action:
+     service: homeassistant.turn_on
+     entity_id: input_boolean.daniyar_home
+
+- alias: 'Daniyar Yeralin Away Beacon-based'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: sensor.beacon_sensor
+    from: 'Living room'
+    to: 'not_home'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.daniyar_home
+        state: 'on'
+      - condition: state
+        entity_id: device_tracker.daniyar_iphone
+        state: 'not_home'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.daniyar_home
+
+- alias: 'Daniyar Yeralin Home iPhone-based'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: device_tracker.daniyar_iphone
+    from: 'not_home'
+    to: 'home'
+  condition:
+    condition: and
+    conditions:
+     - condition: state
+       entity_id: sensor.beacon_sensor
+       state: 'Living room'
+     - condition: state
+       entity_id: input_boolean.daniyar_home
+       state: 'off'
+  action:
+     service: homeassistant.turn_on
+     entity_id: input_boolean.daniyar_home
+
+- alias: 'Daniyar Yeralin Away iPhone-based'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: device_tracker.daniyar_iphone
+    from: 'home'
+    to: 'not_home'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: sensor.beacon_sensor
+        state: 'not_home'
+      - condition: state
+        entity_id: input_boolean.daniyar_home
+        state: 'on'  
+  action:
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.daniyar_home

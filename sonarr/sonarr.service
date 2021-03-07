@@ -1,0 +1,15 @@
+[Unit]
+Description=Sonarr Container
+After=docker.service
+Requires=docker.service
+
+[Service]
+User=daniyar
+Group=daniyar
+Restart=always
+ExecStartPre=-/usr/bin/docker stop sonarr
+ExecStart=/usr/bin/docker start -a sonarr
+ExecStop=/usr/bin/docker stop sonarr
+
+[Install]
+WantedBy=multi-user.target

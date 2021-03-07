@@ -1,0 +1,11 @@
+docker run -d \
+  --name=jackett \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=Americas/New_York \
+  -e AUTO_UPDATE=true `#optional` \
+  -p 9117:9117 \
+  -v /home/daniyar/system/jackett/config:/config \
+  -v /home/daniyar/media:/downloads \
+  --restart unless-stopped \
+  linuxserver/jackett

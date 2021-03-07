@@ -1,0 +1,15 @@
+[Unit]
+Description=Lidarr Container
+After=docker.service
+Requires=docker.service
+
+[Service]
+User=daniyar
+Group=daniyar
+Restart=always
+ExecStartPre=-/usr/bin/docker stop lidarr
+ExecStart=/usr/bin/docker start -a lidarr
+ExecStop=/usr/bin/docker stop lidarr
+
+[Install]
+WantedBy=multi-user.target

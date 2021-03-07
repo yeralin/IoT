@@ -1,0 +1,9 @@
+docker run -d \
+  --name=organizr \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=Americas/New_York \
+  -p 80:80 \
+  -v /home/daniyar/system/organizr/config:/config \
+  --restart unless-stopped \
+  organizr/organizr

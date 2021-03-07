@@ -1,0 +1,16 @@
+{
+    "version": 1,
+    "key": "esphome.cf1046b22fad191fd3db8c900c7540e1",
+    "data": {
+        "device_info": {
+            "uses_password": false,
+            "name": "smart_fountain",
+            "mac_address": "A4:CF:12:04:BE:B4",
+            "compilation_time": "Nov 23 2020, 22:55:59",
+            "model": "NodeMCU-32S",
+            "has_deep_sleep": false,
+            "esphome_version": "1.15.3"
+        },
+        "services": [],
+    }
+}

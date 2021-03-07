@@ -1,0 +1,45 @@
+{
+    "version": 1,
+    "key": "esphome.7aa0eb84bbbe5e12218e3cb55135c74a",
+    "data": {
+        "device_info": {
+            "uses_password": false,
+            "name": "smart_fountain",
+            "mac_address": "A4:CF:12:04:BE:B4",
+            "compilation_time": "Feb 11 2021, 21:18:11",
+            "model": "NodeMCU-32S",
+            "has_deep_sleep": false,
+            "esphome_version": "1.15.3"
+        },
+        "services": [
+            {
+                "name": "refill_water",
+                "key": 2872083433,
+                "args": []
+            }
+        ],
+        "binary_sensor": [
+            {
+                "object_id": "water_level_reached",
+                "key": 2927779290,
+                "name": "Water level reached",
+                "unique_id": "smart_fountainbinary_sensorwater_level_reached",
+                "device_class": "",
+                "is_status_binary_sensor": false
+            }
+        ],
+        "sensor": [
+            {
+                "object_id": "is_fountain_broken",
+                "key": 3110223296,
+                "name": "Is fountain broken",
+                "unique_id": "smart_fountainsensoris_fountain_broken",
+                "icon": "",
+                "unit_of_measurement": "",
+                "accuracy_decimals": 1,
+                "force_update": false
+            }
+        ],
+        "text_sensor": []
+    }
+}

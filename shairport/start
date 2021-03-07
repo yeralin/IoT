@@ -1,0 +1,7 @@
+docker run -d \
+--restart unless-stopped \
+--name shairport \
+--net host \
+--device /dev/snd \
+mikebrady/shairport-sync -- \
+-d hw:1

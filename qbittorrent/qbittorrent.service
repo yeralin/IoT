@@ -1,0 +1,15 @@
+[Unit]
+Description=Qbittorrent Container
+After=docker.service
+Requires=docker.service
+
+[Service]
+User=daniyar
+Group=daniyar
+Restart=always
+ExecStartPre=-/usr/bin/docker stop qbittorrent
+ExecStart=/usr/bin/docker start -a qbittorrent
+ExecStop=/usr/bin/docker stop qbittorrent
+
+[Install]
+WantedBy=multi-user.target

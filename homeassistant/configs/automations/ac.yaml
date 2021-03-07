@@ -1,0 +1,33 @@
+#- alias: 'Temp detect AC On (Above 34C°)'
+#  trigger:
+#    platform: numeric_state
+#    entity_id: sensor.room_temp
+#    above: 34
+#  condition:
+#    condition: state
+#    entity_id: binary_sensor.daniyar_home
+#    state: 'on'
+#  action:
+#    service: homeassistant.turn_on
+#    entity_id: switch.ac
+#- alias: 'Turn off AC when left'
+#  trigger:
+#    platform: state
+#    entity_id: binary_sensor.daniyar_home
+#    from: 'off'
+#    to: 'on'
+#  condition:
+#    condition: state
+#    entity_id: 'switch.ac'
+#    state: 'on'
+#  action:
+#    - service: homeassistant.turn_off
+#      entity_id: switch.ac
+#    - service: notify.yeralin_bot
+#      data:
+#        title: "AC was turned off"
+#        message: "Seems like you left your apartment with AC on, I gladly turned it off for you :)"
+#        data:
+#          inline_keyboard:
+#            - "I'm still home:/turnOn AC"
+#            - "All good:/dismiss"

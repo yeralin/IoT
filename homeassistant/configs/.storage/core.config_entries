@@ -1,0 +1,286 @@
+{
+    "version": 1,
+    "key": "core.config_entries",
+    "data": {
+        "entries": [
+            {
+                "entry_id": "86bde80d06d14e0b9fbb70b0b71dc14c",
+                "version": 1,
+                "domain": "mqtt",
+                "title": "configuration.yaml",
+                "data": {},
+                "options": {},
+                "system_options": {
+                    "disable_new_entities": false
+                },
+                "source": "import",
+                "connection_class": "local_push",
+                "unique_id": null
+            },
+            {
+                "entry_id": "3b7f4109d6124dfc8d4d1f37e305c0b1",
+                "version": 1,
+                "domain": "met",
+                "title": "Home",
+                "data": {
+                    "track_home": true
+                },
+                "options": {},
+                "system_options": {
+                    "disable_new_entities": false
+                },
+                "source": "onboarding",
+                "connection_class": "cloud_poll",
+                "unique_id": null
+            },
+            {
+                "entry_id": "7326734b388045d7a4d1f82495d2d9ac",
+                "version": 1,
+                "domain": "esphome",
+                "title": "smart_feeder",
+                "data": {
+                    "host": "smart_feeder.local",
+                    "password": "",
+                    "port": 6053
+                },
+                "options": {},
+                "system_options": {
+                    "disable_new_entities": false
+                },
+                "source": "user",
+                "connection_class": "local_push",
+                "unique_id": null
+            },
+            {
+                "entry_id": "2352dc3b95b74493b7249af3c7fa5327",
+                "version": 1,
+                "domain": "ifttt",
+                "title": "IFTTT Webhook",
+                "data": {
+                    "cloudhook": false,
+                    "webhook_id": "944d6a2c0a30bab10d410b0a846c342584ce3be6ff6ea34182e2378e0d7b34d8"
+                },
+                "options": {},
+                "system_options": {
+                    "disable_new_entities": false
+                },
+                "source": "user",
+                "connection_class": "unknown",
+                "unique_id": null
+            },
+            {
+                "entry_id": "5ac913e4dba24dc3a3112f0b2391c4ee",
+                "version": 1,
+                "domain": "wemo",
+                "title": "Wemo",
+                "data": {},
+                "options": {},
+                "system_options": {
+                    "disable_new_entities": false
+                },
+                "source": "import",
+                "connection_class": "local_push",
+                "unique_id": null
+            },
+            {
+                "entry_id": "7a11b1abc6d54ced899ced9c91534816",
+                "version": 1,
+                "domain": "esphome",
+                "title": "smart_intercom",
+                "data": {
+                    "host": "smart_intercom.local",
+                    "password": "",
+                    "port": 6053
+                },
+                "options": {},
+                "system_options": {
+                    "disable_new_entities": false
+                },
+                "source": "user",
+                "connection_class": "local_push",
+                "unique_id": null
+            },
+            {
+                "entry_id": "36d6fa820b6511eb9b08b3bb432c74c5",
+                "version": 1,
+                "domain": "tile",
+                "title": "daniyar.yeralin@gmail.com",
+                "data": {
+                    "username": "daniyar.yeralin@gmail.com",
+                    "password": "2NV3vpbMNw9KjHP"
+                },
+                "options": {},
+                "system_options": {
+                    "disable_new_entities": false
+                },
+                "source": "import",
+                "connection_class": "cloud_poll",
+                "unique_id": "daniyar.yeralin@gmail.com"
+            },
+            {
+                "entry_id": "824b45cf13bd11ebbe2463a7342ed046",
+                "version": 1,
+                "domain": "mobile_app",
+                "title": "Armor X5",
+                "data": {
+                    "app_id": "io.homeassistant.companion.android",
+                    "app_name": "Home Assistant",
+                    "app_version": "2.5.0-full (400)",
+                    "device_name": "Armor X5",
+                    "manufacturer": "Ulefone",
+                    "model": "Armor X5",
+                    "os_name": "Android",
+                    "os_version": "29",
+                    "supports_encryption": false,
+                    "app_data": {
+                        "push_url": "https://mobile-apps.home-assistant.io/api/sendPush/android/v1",
+                        "push_token": "c3K3VEfRTPmNp5tj53mkx2:APA91bHqxAiDVFn1Wt0OVDHIopyDwQatsXb1AC9ewQ4l9Aqg2yIblm82vcy0DV3ckW4XbnxTOdSOph7m_I101mJDondj9VeCZbxOkpVXN3_F6jMTBSLREirkkK1GPAYq18rhhz1Mbhb1"
+                    },
+                    "device_id": "96619e1591b9ce9b",
+                    "webhook_id": "508e499f0ead784bcaa0336cc90e4ce630192cbe707cbe08ef94e7cd15f63331",
+                    "user_id": "91aa0d5781e047b795c9b0b9bb3c520c"
+                },
+                "options": {},
+                "system_options": {
+                    "disable_new_entities": false
+                },
+                "source": "registration",
+                "connection_class": "cloud_push",
+                "unique_id": "io.homeassistant.companion.android-96619e1591b9ce9b"
+            },
+            {
+                "entry_id": "e115c76f248c11eba0d10be8657620c0",
+                "version": 1,
+                "domain": "lifx",
+                "title": "LIFX",
+                "data": {},
+                "options": {},
+                "system_options": {
+                    "disable_new_entities": false
+                },
+                "source": "import",
+                "connection_class": "local_poll",
+                "unique_id": null
+            },
+            {
+                "entry_id": "7aa0eb84bbbe5e12218e3cb55135c74a",
+                "version": 1,
+                "domain": "esphome",
+                "title": "smart_fountain",
+                "data": {
+                    "host": "smart_fountain.local",
+                    "port": 6053,
+                    "password": ""
+                },
+                "options": {},
+                "system_options": {
+                    "disable_new_entities": false
+                },
+                "source": "user",
+                "connection_class": "local_push",
+                "unique_id": null
+            },
+            {
+                "entry_id": "75783f541a31bd6d9a993959ca287aae",
+                "version": 1,
+                "domain": "onvif",
+                "title": "camera - 7c:a7:b0:3c:d4:86",
+                "data": {
+                    "port": 8080,
+                    "name": "camera",
+                    "host": "192.168.1.21",
+                    "username": "admin",
+                    "password": "123456",
+                    "snapshot_auth": "digest"
+                },
+                "options": {
+                    "extra_arguments": "-pred 1",
+                    "rtsp_transport": "udp_multicast"
+                },
+                "system_options": {
+                    "disable_new_entities": false
+                },
+                "source": "user",
+                "connection_class": "local_poll",
+                "unique_id": "7c:a7:b0:3c:d4:86"
+            },
+            {
+                "entry_id": "d90dea74acf1448a037994cce95a410c",
+                "version": 1,
+                "domain": "homekit",
+                "title": "Home Assistant Bridge:51827",
+                "data": {
+                    "ip_address": "192.168.1.5",
+                    "name": "Home Assistant Bridge",
+                    "port": 51827
+                },
+                "options": {
+                    "filter": {
+                        "include_domains": [
+                            "light",
+                            "switch",
+                            "script",
+                            "scene"
+                        ],
+                        "include_entities": [
+                            "media_player.tv"
+                        ],
+                        "include_entity_globs": [],
+                        "exclude_domains": [],
+                        "exclude_entity_globs": [],
+                        "exclude_entities": []
+                    },
+                    "auto_start": true,
+                    "safe_mode": false,
+                    "entity_config": {
+                        "media_player.tv": {
+                            "feature_list": {
+                                "on_off": {}
+                            },
+                            "low_battery_threshold": 20
+                        }
+                    },
+                    "mode": "bridge"
+                },
+                "system_options": {
+                    "disable_new_entities": false
+                },
+                "source": "import",
+                "connection_class": "local_push",
+                "unique_id": null
+            },
+            {
+                "entry_id": "8edfe8f4a163e76970e7b146fd9e9172",
+                "version": 1,
+                "domain": "mobile_app",
+                "title": "Dan\u2019s iPhone",
+                "data": {
+                    "app_id": "io.robbie.HomeAssistant",
+                    "device_name": "Dan\u2019s iPhone",
+                    "app_data": {
+                        "push_token": "c2Nvfo86uUhIsb3NB6PHhf:APA91bEJ32pkUN8zmQ5BTUCrRqzZAPbV3wE4_A2rZyFUYYELRMf4t3wYznbeM4VFFIXFbkks7SG-iSNruBOen03kEFFMagr1C05ngoQ9a-5_m1vzsyN0px_b_fqvnWITp_7YnVwyat28",
+                        "push_url": "https://mobile-apps.home-assistant.io/api/sendPushNotification"
+                    },
+                    "os_name": "iOS",
+                    "device_id": "B098868B-2AEE-4A28-8E11-AF85BC53EE92",
+                    "manufacturer": "Apple",
+                    "model": "iPhone13,1",
+                    "os_version": "14.3",
+                    "supports_encryption": true,
+                    "app_name": "Home Assistant",
+                    "app_version": "2021.2.2 (2021.55)",
+                    "webhook_id": "ba55ab3d19026101008f64ec5a52486979a9baf72ff1838dcb07d1fa39ebac24",
+                    "secret": "fa74434271626f4c4b7fd856979512a1c74a090b953ef844febe3b4d241ce758",
+                    "user_id": "91aa0d5781e047b795c9b0b9bb3c520c"
+                },
+                "options": {},
+                "system_options": {
+                    "disable_new_entities": false
+                },
+                "source": "registration",
+                "connection_class": "cloud_push",
+                "unique_id": "io.robbie.HomeAssistant-B098868B-2AEE-4A28-8E11-AF85BC53EE92"
+            }
+        ]
+    }
+}

@@ -1,0 +1,50 @@
+- alias: 'Turn on lights when come home'
+  trigger:
+    platform: state
+    entity_id:  binary_sensor.daniyar_home
+    from: 'off'
+    to: 'on'
+  action:
+    service: light.turn_on
+    entity_id:
+      - light.sofa_lamp
+      - light.computer_lamp
+
+- alias: 'Turn off lights when left'
+  initial_state: false
+  trigger:
+    platform: state
+    entity_id:  binary_sensor.daniyar_home
+    from: 'on'
+    to: 'off'
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: light.computer_lamp
+        state: 'on'
+      - condition: state
+        entity_id:  light.sofa_lamp
+        state: 'on'
+  action:
+    - service: light.turn_off
+      entity_id:
+        - light.sofa_lamp
+        - light.computer_lamp
+    - service: notify.yeralin_bot
+      data:
+        title: "Lights were turned off"
+        message: "Seems like you left your apartment with lights on, I gladly turned them off for you :)"
+        data:
+          inline_keyboard:
+            - "I'm still home:/turnOn lights"
+            - "All good:/dismiss"
+
+- alias: 'Christmas lights after sunset'
+  initial_state: true
+  trigger:
+    platform: sun
+    event: sunset
+  action:
+    service: switch.turn_on
+    entity_id: switch.livingroom_ac

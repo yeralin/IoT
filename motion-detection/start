@@ -1,0 +1,1 @@
+docker run -d --name motion-detection --net host -e 'TZ=America/New_York' -e 'LANG=C.UTF-8' motion-detection:latest

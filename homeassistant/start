@@ -1,0 +1,1 @@
+docker run --init -d --name homeassistant -v ${HOME}/system/homeassistant/configs:/config --net host -e 'TZ=America/New_York' -e 'LANG=C.UTF-8' homeassistant/raspberrypi4-homeassistant:stable

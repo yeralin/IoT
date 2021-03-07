@@ -1,0 +1,38 @@
+- alias: "IFTTT Robovacuum general"
+  initial_state: True
+  trigger:
+    platform: event
+    event_type: ifttt_webhook_received
+    event_data:
+      action: call_service
+  condition:
+    condition: or
+    conditions:
+     - condition: template
+       value_template: "{{ trigger.event.data.service == 'vacuum.start' }}"
+     - condition: template
+       value_template: "{{ trigger.event.data.service == 'vacuum.pause' }}"
+     - condition: template
+       value_template: "{{ trigger.event.data.service == 'vacuum.return_to_base' }}"
+  action:
+    service_template: "{{ trigger.event.data.service }}"
+    data_template:
+      entity_id: "{{ trigger.event.data.entity_id }}"
+
+- alias: "IFTTT Robovacuum clean location"
+  initial_state: True
+  trigger:
+    platform: event
+    event_type: ifttt_webhook_received
+    event_data:
+      action: call_service
+  condition:
+    condition: template
+    value_template: "{{ trigger.event.data.location is defined }}"
+  action:
+    - service: python_script.robovacuum_target_location
+      data_template:
+        entity_id: "{{ trigger.event.data.entity_id }}"
+        service: "{{ trigger.event.data.service }}"
+        location: "{{ trigger.event.data.location }}"
+        repeats: 1

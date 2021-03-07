@@ -1,0 +1,15 @@
+[Unit]
+Description=Motion Detection Container
+After=docker.service
+Requires=docker.service
+
+[Service]
+User=daniyar
+Group=daniyar
+Restart=always
+ExecStartPre=-/usr/bin/docker stop motion-detection
+ExecStart=/usr/bin/docker start -a motion-detection
+ExecStop=/usr/bin/docker stop motion-detection
+
+[Install]
+WantedBy=local.target

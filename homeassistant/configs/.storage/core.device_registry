@@ -1,0 +1,315 @@
+{
+    "version": 1,
+    "key": "core.device_registry",
+    "data": {
+        "devices": [
+            {
+                "config_entries": [
+                    "7326734b388045d7a4d1f82495d2d9ac"
+                ],
+                "connections": [
+                    [
+                        "mac",
+                        "a0:20:a6:16:cd:62"
+                    ]
+                ],
+                "identifiers": [],
+                "manufacturer": "espressif",
+                "model": "PLATFORMIO_NODEMCUV2",
+                "name": "smart_feeder",
+                "sw_version": "1.15.3 (Feb 24 2021, 19:19:45)",
+                "entry_type": null,
+                "id": "f08efa449f084083a1110731181a9beb",
+                "via_device_id": null,
+                "area_id": null,
+                "name_by_user": null,
+                "disabled_by": null
+            },
+            {
+                "config_entries": [
+                    "7a11b1abc6d54ced899ced9c91534816"
+                ],
+                "connections": [
+                    [
+                        "mac",
+                        "5c:cf:7f:fd:84:ac"
+                    ]
+                ],
+                "identifiers": [],
+                "manufacturer": "espressif",
+                "model": "PLATFORMIO_NODEMCUV2",
+                "name": "smart_intercom",
+                "sw_version": "1.15.3 (Oct 28 2020, 19:01:09)",
+                "entry_type": null,
+                "id": "42cb4645276a4faf88be84a818477fc9",
+                "via_device_id": null,
+                "area_id": null,
+                "name_by_user": null,
+                "disabled_by": null
+            },
+            {
+                "config_entries": [
+                    "824b45cf13bd11ebbe2463a7342ed046"
+                ],
+                "connections": [],
+                "identifiers": [
+                    [
+                        "mobile_app",
+                        "96619e1591b9ce9b"
+                    ]
+                ],
+                "manufacturer": "Ulefone",
+                "model": "Armor X5",
+                "name": "Armor X5",
+                "sw_version": "29",
+                "entry_type": null,
+                "id": "824b585313bd11eb8029bd6f1f7e7af3",
+                "via_device_id": null,
+                "area_id": null,
+                "name_by_user": null,
+                "disabled_by": null
+            },
+            {
+                "config_entries": [
+                    "e115c76f248c11eba0d10be8657620c0"
+                ],
+                "connections": [
+                    [
+                        "mac",
+                        "d0:73:d5:25:c3:10"
+                    ]
+                ],
+                "identifiers": [
+                    [
+                        "lifx",
+                        "d0:73:d5:25:c3:10"
+                    ]
+                ],
+                "manufacturer": "LIFX",
+                "model": "LIFX A19",
+                "name": "Sofa Lamp",
+                "sw_version": 2.77,
+                "entry_type": null,
+                "id": "e63b3e1e248c11ebb18315eaf2120f66",
+                "via_device_id": null,
+                "area_id": null,
+                "name_by_user": null,
+                "disabled_by": null
+            },
+            {
+                "config_entries": [
+                    "e115c76f248c11eba0d10be8657620c0"
+                ],
+                "connections": [
+                    [
+                        "mac",
+                        "d0:73:d5:2c:51:47"
+                    ]
+                ],
+                "identifiers": [
+                    [
+                        "lifx",
+                        "d0:73:d5:2c:51:47"
+                    ]
+                ],
+                "manufacturer": "LIFX",
+                "model": "LIFX A19",
+                "name": "Computer lamp",
+                "sw_version": 2.77,
+                "entry_type": null,
+                "id": "e63be15b248c11eb86b1ed883db0e4ac",
+                "via_device_id": null,
+                "area_id": null,
+                "name_by_user": null,
+                "disabled_by": null
+            },
+            {
+                "config_entries": [
+                    "3b7f4109d6124dfc8d4d1f37e305c0b1"
+                ],
+                "connections": [],
+                "identifiers": [
+                    [
+                        "met"
+                    ]
+                ],
+                "manufacturer": "Met.no",
+                "model": "Forecast",
+                "name": "Forecast",
+                "sw_version": null,
+                "entry_type": "service",
+                "id": "3638b4f085e88f03018d19308918fd57",
+                "via_device_id": null,
+                "area_id": null,
+                "name_by_user": null,
+                "disabled_by": null
+            },
+            {
+                "config_entries": [
+                    "7326734b388045d7a4d1f82495d2d9ac",
+                    "7aa0eb84bbbe5e12218e3cb55135c74a"
+                ],
+                "connections": [
+                    [
+                        "mac",
+                        "a4:cf:12:04:be:b4"
+                    ]
+                ],
+                "identifiers": [],
+                "manufacturer": "espressif",
+                "model": "NodeMCU-32S",
+                "name": "smart_fountain",
+                "sw_version": "1.15.3 (Feb 11 2021, 21:18:11)",
+                "entry_type": null,
+                "id": "aca002e0fa481500f791377b6dc3730d",
+                "via_device_id": null,
+                "area_id": null,
+                "name_by_user": null,
+                "disabled_by": null
+            },
+            {
+                "config_entries": [
+                    "75783f541a31bd6d9a993959ca287aae"
+                ],
+                "connections": [
+                    [
+                        "mac",
+                        "7c:a7:b0:3c:d4:86"
+                    ]
+                ],
+                "identifiers": [
+                    [
+                        "onvif",
+                        "7c:a7:b0:3c:d4:86"
+                    ]
+                ],
+                "manufacturer": "IPC365",
+                "model": "81XXF",
+                "name": "camera",
+                "sw_version": "V5.18.74",
+                "entry_type": null,
+                "id": "320b8b007d9f7a6af5ed93538ca9acde",
+                "via_device_id": null,
+                "area_id": null,
+                "name_by_user": null,
+                "disabled_by": null
+            },
+            {
+                "config_entries": [
+                    "5ac913e4dba24dc3a3112f0b2391c4ee"
+                ],
+                "connections": [],
+                "identifiers": [
+                    [
+                        "wemo",
+                        "221704K0101FF1"
+                    ]
+                ],
+                "manufacturer": "Belkin",
+                "model": "Socket",
+                "name": "Livingroom AC",
+                "sw_version": null,
+                "entry_type": null,
+                "id": "bb36cefd630247ed693671a8f9bf87f6",
+                "via_device_id": null,
+                "area_id": null,
+                "name_by_user": null,
+                "disabled_by": null
+            },
+            {
+                "config_entries": [
+                    "7a11b1abc6d54ced899ced9c91534816"
+                ],
+                "connections": [
+                    [
+                        "mac",
+                        "84:cc:a8:a6:22:37"
+                    ]
+                ],
+                "identifiers": [],
+                "manufacturer": "espressif",
+                "model": "PLATFORMIO_NODEMCUV2",
+                "name": "smart_intercom",
+                "sw_version": "1.15.3 (Oct 28 2020, 19:01:09)",
+                "entry_type": null,
+                "id": "f9c7d24883f81818d0ee0b17805eb308",
+                "via_device_id": null,
+                "area_id": null,
+                "name_by_user": null,
+                "disabled_by": null
+            },
+            {
+                "config_entries": [
+                    "d90dea74acf1448a037994cce95a410c"
+                ],
+                "connections": [
+                    [
+                        "mac",
+                        "6a:c5:4d:ed:d6:3a"
+                    ]
+                ],
+                "identifiers": [
+                    [
+                        "homekit",
+                        "d90dea74acf1448a037994cce95a410c",
+                        "homekit.bridge"
+                    ]
+                ],
+                "manufacturer": "Home Assistant",
+                "model": "Home Assistant HomeKit Bridge",
+                "name": "Home Assistant Bridge",
+                "sw_version": null,
+                "entry_type": null,
+                "id": "da0115bb5360012c8546e40068137c07",
+                "via_device_id": null,
+                "area_id": null,
+                "name_by_user": null,
+                "disabled_by": null
+            },
+            {
+                "config_entries": [
+                    "8edfe8f4a163e76970e7b146fd9e9172"
+                ],
+                "connections": [],
+                "identifiers": [
+                    [
+                        "mobile_app",
+                        "B098868B-2AEE-4A28-8E11-AF85BC53EE92"
+                    ]
+                ],
+                "manufacturer": "Apple",
+                "model": "iPhone13,1",
+                "name": "Dan\u2019s iPhone",
+                "sw_version": "14.3",
+                "entry_type": null,
+                "id": "5003637a1e047923fbec319b54f3cca1",
+                "via_device_id": null,
+                "area_id": null,
+                "name_by_user": null,
+                "disabled_by": null
+            }
+        ],
+        "deleted_devices": [
+            {
+                "config_entries": [
+                    "3d4c38774b6a6167c723d0773541a3f6"
+                ],
+                "connections": [
+                    [
+                        "mac",
+                        "48:9b:88:c0:d5:ad"
+                    ]
+                ],
+                "identifiers": [
+                    [
+                        "homekit",
+                        "3d4c38774b6a6167c723d0773541a3f6",
+                        "homekit.bridge"
+                    ]
+                ],
+                "id": "7d5053dde79311d9664ed51d590f5da3",
+                "orphaned_timestamp": null
+            }
+        ]
+    }
+}

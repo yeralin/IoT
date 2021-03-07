@@ -1,0 +1,11 @@
+docker run -d \
+  --name=qbittorrent \
+  --net=host \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=America/New_York \
+  -e WEBUI_PORT=8080 \
+  -v /home/daniyar/system/qbittorrent/config:/config \
+  -v /home/daniyar/media/:/downloads \
+  --restart unless-stopped \
+  linuxserver/qbittorrent

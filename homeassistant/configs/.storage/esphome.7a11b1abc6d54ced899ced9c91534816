@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "key": "esphome.7a11b1abc6d54ced899ced9c91534816",
+    "data": {
+        "device_info": {
+            "uses_password": false,
+            "name": "smart_intercom",
+            "mac_address": "84:CC:A8:A6:22:37",
+            "compilation_time": "Oct 28 2020, 19:01:09",
+            "model": "PLATFORMIO_NODEMCUV2",
+            "has_deep_sleep": false,
+            "esphome_version": "1.15.3"
+        },
+        "services": [],
+        "switch": [
+            {
+                "object_id": "intercom",
+                "key": 1130537588,
+                "name": "Intercom",
+                "unique_id": "smart_intercomswitchintercom",
+                "icon": "mdi:icon-building",
+                "assumed_state": false
+            }
+        ]
+    }
+}

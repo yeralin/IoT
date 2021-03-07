@@ -1,0 +1,4 @@
+docker run -d \
+--name doods \
+-p 8124:8080 \
+snowzach/doods:latest

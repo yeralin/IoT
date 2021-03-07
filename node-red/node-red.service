@@ -1,0 +1,15 @@
+[Unit]
+Description=Node-Red Container
+After=docker.service
+Requires=docker.service
+
+[Service]
+User=daniyar
+Group=daniyar
+Restart=always
+ExecStartPre=-/usr/bin/docker stop node-red
+ExecStart=/usr/bin/docker start -a node-red
+ExecStop=/usr/bin/docker stop node-red
+
+[Install]
+WantedBy=multi-user.target

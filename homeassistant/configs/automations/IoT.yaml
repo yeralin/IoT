@@ -1,0 +1,96 @@
+- alias: "Pet Feeder Interval"
+  initial_state: true
+  trigger:
+#    - platform: homeassistant
+#      event: start
+    - platform: state
+      entity_id: input_number.feeder_interval
+    - platform: state
+      entity_id: sensor.pet_feeder_interval
+      from: unavailable
+  action:
+    service: esphome.smart_feeder_change_feed_interval
+    data_template:
+      new_feed_interval: "{{ states('input_number.feeder_interval') | int }}"
+
+- alias: "Pet Feeder Weight"
+  initial_state: true
+  trigger:
+ #    - platform: homeassistant
+ #     event: start
+    - platform: state
+      entity_id: input_number.feeder_food_weight
+    - platform: state
+      entity_id: sensor.pet_feeder_target_weight
+      from: unavailable
+  action:
+    service: esphome.smart_feeder_change_target_weight
+    data_template:
+      new_target_weight: "{{ states('input_number.feeder_food_weight') | int }}"
+
+- alias: "Water plant"
+  trigger:
+  - platform: time_pattern
+    minutes: 0
+  condition:
+  - condition: template
+    value_template: "{% if (now().strftime('%I') | int) % (states.input_number.water_interval.state | int) == 0 %}true{% endif %}"
+  action:
+  - service: rest_command.start_watering
+  
+- alias: "Plant waterer Interval Update"
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: input_number.water_interval
+  action:
+  - service: rest_command.set_watering_interval
+
+- alias: "Plant waterer Duration Update"
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: input_number.water_duration
+  action:
+  - service: rest_command.set_watering_duration
+
+- alias: "Send video once cat is detected"
+  initial_state: true
+  trigger:
+    - platform: numeric_state
+      entity_id: image_processing.doods_camera
+      value_template: "{{ state.attributes.total_matches }}"
+      above: 0
+  condition:
+    - condition: state
+      entity_id: timer.cat_detected
+      state: idle
+  action:
+      - service: timer.start
+        entity_id: timer.cat_detected
+      - service: camera.record
+        data:
+          entity_id: camera.camera
+          filename: '/config/www/doods/detection.mp4'
+          duration: 30
+      - delay: '00:01:00'
+      - service: notify.yeralin_bot
+        data:
+          title: Cat detected
+          message: "Cat was detected"
+          data:
+            video:
+              - file: '/config/www/doods/detection.mp4' 
+                timeout: 180
+- alias: "On TV turn on switch to PC HDMI"
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: media_player.tv
+      from: "off"
+      to: "on"
+  action:
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.tv
+        source: "PC"

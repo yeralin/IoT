@@ -1,0 +1,15 @@
+[Unit]
+Description=Homeassistant Container
+After=docker.service
+Requires=docker.service
+
+[Service]
+User=daniyar
+Group=daniyar
+Restart=always
+ExecStartPre=-/usr/bin/docker stop homeassistant
+ExecStart=/usr/bin/docker start -a homeassistant
+ExecStop=/usr/bin/docker stop homeassistant
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,40 @@
+
+daniyar_iphone:
+  hide_if_away: false
+  icon:
+  mac:
+  name: daniyar iphone
+  picture:
+  track: false
+
+tile_c84227969ff8494f:
+  hide_if_away: false
+  icon: mdi:view-grid
+  mac:
+  name: Wallet
+  picture:
+  track: false
+
+tile_p_ad9cbb13c69ae0dbf06b324e28ae8035:
+  hide_if_away: false
+  icon: mdi:view-grid
+  mac:
+  name: Daniyar's iPhone
+  picture:
+  track: true
+
+tile_p_5d088f680bfb24ca9cc257310772d3b6:
+  hide_if_away: false
+  icon: mdi:view-grid
+  mac:
+  name: tile p 5d088f680bfb24ca9cc257310772d3b6
+  picture:
+  track: true
+
+tile_p_69147b3da29255e06c9c3775772d31ea:
+  hide_if_away: false
+  icon: mdi:view-grid
+  mac:
+  name: tile p 69147b3da29255e06c9c3775772d31ea
+  picture:
+  track: true

@@ -1,0 +1,226 @@
+[
+    {
+        "id": "bb04598c.2a6e08",
+        "type": "inject",
+        "z": "5911470f.4efe88",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 100,
+        "y": 40,
+        "wires": [
+            [
+                "aade01b6.d4183"
+            ]
+        ]
+    },
+    {
+        "id": "c9b356c7.cbea48",
+        "type": "debug",
+        "z": "5911470f.4efe88",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 470,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "aade01b6.d4183",
+        "type": "actionflows",
+        "z": "5911470f.4efe88",
+        "info": "Describe your action API here.",
+        "untilproptype": "num",
+        "proptype": "msg",
+        "name": "action",
+        "prop": "loop",
+        "untilprop": "2",
+        "until": "gt",
+        "loop": "none",
+        "scope": "global",
+        "perf": false,
+        "seq": false,
+        "x": 270,
+        "y": 40,
+        "wires": [
+            [
+                "c9b356c7.cbea48"
+            ]
+        ]
+    },
+    {
+        "id": "27eca698.fc234a",
+        "type": "actionflows_in",
+        "z": "5911470f.4efe88",
+        "name": "action in",
+        "priority": "50",
+        "links": [],
+        "scope": "private",
+        "x": 100,
+        "y": 100,
+        "wires": [
+            [
+                "74763ac0.6a36cc"
+            ]
+        ]
+    },
+    {
+        "id": "a9d26880.b36a88",
+        "type": "actionflows_out",
+        "z": "5911470f.4efe88",
+        "name": "action out",
+        "links": [],
+        "x": 420,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "b6306ae9.203198",
+        "type": "actionflows_in",
+        "z": "5911470f.4efe88",
+        "name": "action in 2",
+        "priority": "50",
+        "links": [],
+        "scope": "private",
+        "x": 100,
+        "y": 160,
+        "wires": [
+            [
+                "508f51d1.70ab3"
+            ]
+        ]
+    },
+    {
+        "id": "3714777a.814718",
+        "type": "actionflows_out",
+        "z": "5911470f.4efe88",
+        "name": "action out 2",
+        "links": [],
+        "x": 570,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "6fc98d69.9dfe64",
+        "type": "actionflows",
+        "z": "5911470f.4efe88",
+        "info": "Describe your action API here.",
+        "untilproptype": "num",
+        "proptype": "msg",
+        "name": "nested",
+        "prop": "loop",
+        "untilprop": 0,
+        "until": "gt",
+        "loop": "none",
+        "scope": "global",
+        "perf": false,
+        "seq": false,
+        "x": 410,
+        "y": 160,
+        "wires": [
+            [
+                "3714777a.814718"
+            ]
+        ]
+    },
+    {
+        "id": "74763ac0.6a36cc",
+        "type": "delay",
+        "z": "5911470f.4efe88",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 260,
+        "y": 100,
+        "wires": [
+            [
+                "a9d26880.b36a88"
+            ]
+        ]
+    },
+    {
+        "id": "508f51d1.70ab3",
+        "type": "delay",
+        "z": "5911470f.4efe88",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 260,
+        "y": 160,
+        "wires": [
+            [
+                "6fc98d69.9dfe64"
+            ]
+        ]
+    },
+    {
+        "id": "6fcd6f13.af569",
+        "type": "actionflows_in",
+        "z": "5911470f.4efe88",
+        "name": "nested in",
+        "priority": "50",
+        "links": [],
+        "scope": "private",
+        "x": 240,
+        "y": 220,
+        "wires": [
+            [
+                "4dc033d2.9966bc"
+            ]
+        ]
+    },
+    {
+        "id": "1e062fcf.5e67d8",
+        "type": "actionflows_out",
+        "z": "5911470f.4efe88",
+        "name": "nested out",
+        "links": [],
+        "x": 570,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "4dc033d2.9966bc",
+        "type": "delay",
+        "z": "5911470f.4efe88",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 400,
+        "y": 220,
+        "wires": [
+            [
+                "1e062fcf.5e67d8"
+            ]
+        ]
+    }
+]

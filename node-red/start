@@ -1,0 +1,1 @@
+docker run -itd -u root --group-add dialout -e TZ=America/New_York -v /home/daniyar/system/node-red/configs:/data --net host --name node-red nodered/node-red:latest

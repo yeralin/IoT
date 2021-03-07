@@ -1,0 +1,15 @@
+[Unit]
+Description=Plex Container
+After=docker.service
+Requires=docker.service
+
+[Service]
+User=daniyar
+Group=daniyar
+Restart=always
+ExecStartPre=-/usr/bin/docker stop plex
+ExecStart=/usr/bin/docker start -a plex
+ExecStop=/usr/bin/docker stop plex
+
+[Install]
+WantedBy=multi-user.target

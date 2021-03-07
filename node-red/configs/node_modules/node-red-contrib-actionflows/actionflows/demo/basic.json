@@ -1,0 +1,193 @@
+[
+    {
+        "id": "3b4ff8d0.970fd8",
+        "type": "inject",
+        "z": "3082c225.0a2e3e",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 100,
+        "y": 60,
+        "wires": [
+            [
+                "602338ac.7ba688"
+            ]
+        ]
+    },
+    {
+        "id": "f46f813f.01c9b8",
+        "type": "debug",
+        "z": "3082c225.0a2e3e",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 550,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "602338ac.7ba688",
+        "type": "change",
+        "z": "3082c225.0a2e3e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Hello World",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 260,
+        "y": 60,
+        "wires": [
+            [
+                "d323143f.32a8e"
+            ]
+        ]
+    },
+    {
+        "id": "d323143f.32a8e",
+        "type": "actionflows",
+        "z": "3082c225.0a2e3e",
+        "info": "Describe your action API here.",
+        "untilproptype": "num",
+        "proptype": "msg",
+        "name": "action",
+        "prop": "loop",
+        "untilprop": "1",
+        "until": "gt",
+        "loop": "none",
+        "scope": "global",
+        "perf": true,
+        "seq": false,
+        "x": 410,
+        "y": 60,
+        "wires": [
+            [
+                "f46f813f.01c9b8"
+            ]
+        ]
+    },
+    {
+        "id": "3927d9b6.d8d016",
+        "type": "actionflows_in",
+        "z": "3082c225.0a2e3e",
+        "name": "action in",
+        "priority": "50",
+        "links": [],
+        "scope": "private",
+        "x": 140,
+        "y": 120,
+        "wires": [
+            [
+                "a6e044b8.1a8d98"
+            ]
+        ]
+    },
+    {
+        "id": "4979fa78.fdd5fc",
+        "type": "actionflows_out",
+        "z": "3082c225.0a2e3e",
+        "name": "action out",
+        "links": [],
+        "x": 540,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "a6e044b8.1a8d98",
+        "type": "change",
+        "z": "3082c225.0a2e3e",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "World",
+                "fromt": "str",
+                "to": "World, and Solar System!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 120,
+        "wires": [
+            [
+                "4979fa78.fdd5fc"
+            ]
+        ]
+    },
+    {
+        "id": "9a40d66c.a6ab",
+        "type": "actionflows_in",
+        "z": "3082c225.0a2e3e",
+        "name": "action 2",
+        "priority": "50",
+        "links": [],
+        "scope": "private",
+        "x": 130,
+        "y": 180,
+        "wires": [
+            [
+                "96ca323b.659958"
+            ]
+        ]
+    },
+    {
+        "id": "45b30884.46ac4",
+        "type": "actionflows_out",
+        "z": "3082c225.0a2e3e",
+        "name": "action 2",
+        "links": [],
+        "x": 540,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "96ca323b.659958",
+        "type": "change",
+        "z": "3082c225.0a2e3e",
+        "name": "change World for Mars",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "World",
+                "fromt": "str",
+                "to": "Mars",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 180,
+        "wires": [
+            [
+                "45b30884.46ac4"
+            ]
+        ]
+    }
+]

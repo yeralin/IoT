@@ -1,0 +1,15 @@
+[Unit]
+Description=Organizr Container
+After=docker.service
+Requires=docker.service
+
+[Service]
+User=daniyar
+Group=daniyar
+Restart=always
+ExecStartPre=-/usr/bin/docker stop organizr
+ExecStart=/usr/bin/docker start -a organizr
+ExecStop=/usr/bin/docker stop organizr
+
+[Install]
+WantedBy=multi-user.target

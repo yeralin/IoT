@@ -1,0 +1,17 @@
+[Unit]
+Description=Shairport Container
+After=docker.service
+After=avahi-daemon.service
+Requires=docker.service
+Requires=avahi-daemon.service
+
+[Service]
+User=daniyar
+Group=daniyar
+Restart=always
+ExecStartPre=-/usr/bin/docker stop shairport
+ExecStart=/usr/bin/docker start -a shairport
+ExecStop=/usr/bin/docker stop shairport
+
+[Install]
+WantedBy=multi-user.target

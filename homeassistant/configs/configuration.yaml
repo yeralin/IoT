@@ -1,0 +1,263 @@
+homeassistant:
+  name: Yeralin House
+  latitude: !secret latitude
+  longitude: !secret longitude
+  unit_system: metric
+  time_zone: America/New_York
+  auth_providers:
+    - type: legacy_api_password
+      api_password: !secret api_password
+    - type: trusted_networks
+      trusted_networks:
+        - 127.0.0.1
+        - 192.168.1.0/24
+        - 10.8.0.0/24
+  customize:
+    sensor.beacon_sensor:
+      hidden: true
+    device_tracker.daniyar_iphone:
+      hidden: true
+    input_boolean.daniyar_home:
+      hidden: true
+  customize_domain:
+    light:
+      assumed_state: false
+
+zone:
+
+logger:
+  default: info
+  logs:
+    homeassistant.components.mpchc.media_player: critical
+    mpd.base: critical
+
+recorder:
+  purge_keep_days: 5
+
+python_script:
+
+wake_on_lan:
+
+frontend:
+
+config:
+
+updater:
+
+mobile_app:
+
+history:
+
+logbook:
+
+sun:
+
+lifx:
+  light:
+    - server: 192.168.1.5
+      broadcast: 192.168.1.30
+    - server: 192.168.1.5
+      broadcast: 192.168.1.31
+
+mqtt:
+  discovery: true
+  password: !secret api_password
+
+wemo:
+  
+
+http:
+  use_x_forwarded_for: True
+  trusted_proxies:
+   - 10.8.0.0/24
+  ip_ban_enabled: True
+  login_attempts_threshold: 5
+
+vacuum:
+  - platform: xiaomi_miio
+    name: Smart Vacuum
+    host: 192.168.1.6
+    token: !secret mi_token
+
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_api_key
+    allowed_chat_ids:
+      - 349300490
+
+notify:
+  - name: "Yeralin Bot"
+    platform: telegram
+    chat_id: 349300490
+
+alert:
+  pet_feeder:
+    name: "Pet Feeder is broken"
+    done_message: "Pet Feeder is fixed now!"
+    entity_id: sensor.is_feeder_broken
+    state: '1.0'
+    repeat: 60
+    notifiers:
+      - yeralin_bot
+  smart_fountain:
+    name: "Smart fountain is broken"
+    done_message: "Smart fountain is fixed now!"
+    entity_id: sensor.is_fountain_broken
+    state: '1.0'
+    repeat: 60
+    notifiers:
+      - yeralin_bot
+  # plant_waterer:
+  #   name: "Plant waterer is not responding"
+  #   done_message: "Plant waterer has finally responded"
+  #   entity_id: binary_sensor.plant_waterer
+  #   state: 'off'
+  #   repeat: 360
+  #   skip_first: true
+  #   notifiers:
+  #     - yeralin_bot
+
+automation: !include_dir_merge_list automations/
+input_number: !include input_number.yaml
+
+sensor:
+#  - platform: command_line
+#    command: "curl http://192.168.1.20/soilSensor" 
+#    name: "Soil sensor"
+#  - platform: command_line
+#    command: /usr/bin/roomTemp
+#    name: "Room Temp"
+#    unit_of_measurement: "°C"
+#    value_template: '{{ value | round(0) }}'
+  - platform: darksky
+    name: 'Rain'
+    api_key: !secret darksky_api_key
+    monitored_conditions:
+      - precip_probability
+  - platform: mqtt_room
+    name: "Beacon sensor"
+    device_id: beacon_sensor
+    state_topic: "beacon_sensor"
+    timeout: 10
+    away_timeout: 10
+
+device_tracker:
+  - platform: tile
+    username: daniyar.yeralin@gmail.com
+    password: !secret tile_password
+
+input_boolean:
+  daniyar_home:
+    name: Daniyar Home
+    initial: on
+
+binary_sensor:
+  - platform: template
+    sensors:
+      daniyar_home:
+        friendly_name: Daniyar home
+        value_template: "{{ states.input_boolean.daniyar_home.state == 'on' }}"
+        device_class: presence
+
+switch:
+  - platform: wake_on_lan
+    name: PC
+    host: 192.168.1.2
+    mac: "D8-50-E6-41-03-8D"
+    broadcast_address: 192.168.1.255
+    turn_off:
+      service: wake_on_lan.send_magic_packet
+      data:
+        mac: 8D:03:41:E6:50:D8
+        broadcast_address: 192.168.1.255
+
+script:
+  pet_feeder:
+    sequence:
+     - service: esphome.smart_feeder_refill_food
+  fountain_refill:
+    sequence:
+     - service: esphome.smart_fountain_refill_water
+
+webostv:
+  name: TV
+  host: 192.168.1.15
+  customize:
+    sources:
+      - PC
+      - PS4
+  turn_on_action:
+    service: wake_on_lan.send_magic_packet
+    data:
+      mac: 14:C9:13:46:05:5D
+      broadcast_address: 192.168.1.255
+
+media_player:
+  - platform: mpchc
+    name: Movie
+    host: http://192.168.1.2
+  - platform: mpd
+    name: Home Music
+    host: 192.168.1.5
+
+ffmpeg:
+
+stream:
+
+#camera:
+#  - platform: generic
+#    name: camera
+#    still_image_url: http://127.0.0.1:8123/local/doods/result.jpg
+#    stream_source: rtsp://admin:123456@192.168.1.21/cam1/mpeg4
+#    username: admin
+#    password: 123456
+#    verify_ssl: false
+
+image_processing:
+  - platform: doods
+    url: http://192.168.1.5:8124
+    detector: default
+    scan_interval: 5
+    source:
+      - entity_id: camera.camera
+    file_out:
+      - "/config/www/doods/result.jpg"
+    labels:
+      - name: cat
+        confidence: 30
+      - name: dog
+        confidence: 30
+
+timer:
+  cat_detected:
+    duration: '01:00:00'
+
+ifttt:
+  key: !secret ifttt_token
+
+google_assistant:
+  project_id: yeralin-house-ad6e7
+  service_account: !include google-service-account.json
+  report_state: true
+  exposed_domains:
+    - light
+    - switch
+    - script
+    - scene
+    - media_player
+
+homekit:
+  ip_address: 192.168.1.5
+  filter:
+    include_domains:
+      - light
+      - switch
+      - script
+      - scene
+    include_entities:
+      - media_player.tv
+  entity_config:
+    media_player.tv:
+      feature_list:
+      - feature: on_off
+

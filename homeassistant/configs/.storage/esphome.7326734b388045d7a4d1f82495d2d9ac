@@ -1,0 +1,110 @@
+{
+    "version": 1,
+    "key": "esphome.7326734b388045d7a4d1f82495d2d9ac",
+    "data": {
+        "device_info": {
+            "uses_password": false,
+            "name": "smart_feeder",
+            "mac_address": "A0:20:A6:16:CD:62",
+            "compilation_time": "Feb 24 2021, 19:19:45",
+            "model": "PLATFORMIO_NODEMCUV2",
+            "has_deep_sleep": false,
+            "esphome_version": "1.15.3"
+        },
+        "services": [
+            {
+                "name": "change_target_weight",
+                "key": 650571554,
+                "args": [
+                    {
+                        "name": "new_target_weight",
+                        "type_": 1
+                    }
+                ]
+            },
+            {
+                "name": "change_feed_interval",
+                "key": 4008198056,
+                "args": [
+                    {
+                        "name": "new_feed_interval",
+                        "type_": 1
+                    }
+                ]
+            },
+            {
+                "name": "toggle_automatic_feeding",
+                "key": 1164884584,
+                "args": []
+            },
+            {
+                "name": "refill_food",
+                "key": 2444947296,
+                "args": []
+            }
+        ],
+        "sensor": [
+            {
+                "object_id": "weight_sensor",
+                "key": 1183795350,
+                "name": "Weight Sensor",
+                "unique_id": "smart_feedersensorweight_sensor",
+                "icon": "",
+                "unit_of_measurement": "gram",
+                "accuracy_decimals": 0,
+                "force_update": false
+            },
+            {
+                "object_id": "hours_since_last_feed",
+                "key": 703205211,
+                "name": "Hours since last feed",
+                "unique_id": "smart_feedersensorhours_since_last_feed",
+                "icon": "",
+                "unit_of_measurement": "",
+                "accuracy_decimals": 1,
+                "force_update": false
+            },
+            {
+                "object_id": "pet_feeder_interval",
+                "key": 3785430170,
+                "name": "Pet feeder interval",
+                "unique_id": "smart_feedersensorpet_feeder_interval",
+                "icon": "",
+                "unit_of_measurement": "",
+                "accuracy_decimals": 1,
+                "force_update": false
+            },
+            {
+                "object_id": "pet_feeder_target_weight",
+                "key": 2291230113,
+                "name": "Pet feeder target weight",
+                "unique_id": "smart_feedersensorpet_feeder_target_weight",
+                "icon": "",
+                "unit_of_measurement": "",
+                "accuracy_decimals": 1,
+                "force_update": false
+            },
+            {
+                "object_id": "is_feeder_broken",
+                "key": 1398022927,
+                "name": "Is feeder broken",
+                "unique_id": "smart_feedersensoris_feeder_broken",
+                "icon": "",
+                "unit_of_measurement": "",
+                "accuracy_decimals": 1,
+                "force_update": false
+            },
+            {
+                "object_id": "is_automatic_feeding_on",
+                "key": 2409836928,
+                "name": "Is automatic feeding on",
+                "unique_id": "smart_feedersensoris_automatic_feeding_on",
+                "icon": "",
+                "unit_of_measurement": "",
+                "accuracy_decimals": 1,
+                "force_update": false
+            }
+        ],
+        "text_sensor": []
+    }
+}

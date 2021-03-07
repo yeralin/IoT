@@ -1,0 +1,144 @@
+{
+    "version": 1,
+    "key": "lovelace",
+    "data": {
+        "config": {
+            "title": "Yeralin House",
+            "views": [
+                {
+                    "panel": false,
+                    "path": "default_view",
+                    "title": "Home",
+                    "badges": [
+                        {
+                            "entity": "binary_sensor.daniyar_home"
+                        },
+                        {
+                            "entity": "binary_sensor.updater"
+                        },
+                        {
+                            "entity": "device_tracker.tile_p_ad9cbb13c69ae0dbf06b324e28ae8035"
+                        },
+                        {
+                            "entity": "sensor.rain_precip_probability"
+                        },
+                        {
+                            "entity": "sensor.is_automatic_feeding_on"
+                        },
+                        {
+                            "entity": "sensor.weight_sensor"
+                        },
+                        {
+                            "entity": "sensor.pet_feeder_interval"
+                        },
+                        {
+                            "entity": "sensor.hours_since_last_feed"
+                        },
+                        {
+                            "entity": "sensor.pet_feeder_target_weight"
+                        },
+                        {
+                            "entity": "sensor.is_feeder_broken"
+                        },
+                        {
+                            "entity": "sun.sun"
+                        },
+                        {
+                            "entity": "binary_sensor.water_level_reached"
+                        }
+                    ],
+                    "cards": [
+                        {
+                            "entities": [],
+                            "title": "Automation",
+                            "type": "entities"
+                        },
+                        {
+                            "entity": "weather.yeralin_smartapartment",
+                            "type": "weather-forecast"
+                        },
+                        {
+                            "entities": [
+                                "light.computer_lamp",
+                                "light.sofa_lamp"
+                            ],
+                            "title": "Light",
+                            "type": "entities"
+                        },
+                        {
+                            "entity": "camera.camera",
+                            "type": "picture-entity",
+                            "image": "http://192.168.1.5:8123/local/doods/result.jpg",
+                            "camera_image": "camera.camera",
+                            "show_name": false,
+                            "show_state": false
+                        },
+                        {
+                            "entities": [
+                                "input_number.feeder_food_weight",
+                                "input_number.water_interval",
+                                "input_number.feeder_interval",
+                                "input_number.water_duration"
+                            ],
+                            "title": "Input number",
+                            "type": "entities"
+                        },
+                        {
+                            "entity": "media_player.home_music",
+                            "type": "media-control"
+                        },
+                        {
+                            "type": "picture",
+                            "image": "http://192.168.1.5:8123/local/doods/result.jpg",
+                            "tap_action": {
+                                "action": "none"
+                            },
+                            "hold_action": {
+                                "action": "none"
+                            }
+                        },
+                        {
+                            "entity": "media_player.movie",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.tv",
+                            "type": "media-control"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "switch.pc"
+                                },
+                                {
+                                    "entity": "switch.intercom"
+                                }
+                            ],
+                            "title": "Switch",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "script.pet_feeder"
+                                },
+                                {
+                                    "entity": "script.fountain_refill"
+                                }
+                            ],
+                            "title": "Script",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                "vacuum.smart_vacuum"
+                            ],
+                            "title": "Vacuum",
+                            "type": "entities"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,334 @@
+<script type="text/javascript">
+	RED.nodes.registerType('actionflows', {
+		category: 'advanced',
+		color: '#E0C67E',
+		defaults: {
+      info: {value: "Describe your action API here."},
+      untilproptype: {value: "num"},
+      proptype: {value: "msg"},
+      name: {value: "action"},
+      prop: {value: "loop"},
+      untilprop: {value: 0},
+      until: {value: "gt"},
+      loop: {value: "none"},
+      scope: {value: "global"},
+      perf: {value: false},
+      seq: {value: false}
+		},
+		inputs:1,
+		outputs:1,
+    icon: function() {
+      if (this.loop == 'none' || typeof this.loop == "undefined") {
+        var icon = "actionflows.png";
+        if (this.scope == "protected") {
+          icon = "actionflows-shield.png";
+        }
+        if (this.scope == "private") {
+          icon = "actionflows-locked.png";
+        }
+        return icon;
+      }else{
+        var icon = "loopflow.png";
+        if (this.scope == "protected") {
+          icon = "loopflow-shield.png";
+        }
+        if (this.scope == "private") {
+          icon = "loopflow-locked.png";
+        }
+        return icon;
+      }
+    },
+    paletteLabel: "action",
+		label: function() {
+      if (this.loop == 'none') {
+        switch(this.scope) {
+            case "global":
+                this._def.icon = "actionflows.png";
+                break;
+            case "protected":
+                this._def.icon = "actionflows-shield.png";
+                break;
+            case "private":
+                this._def.icon = "actionflows-locked.png";
+        }
+      }else{
+        switch(this.scope) {
+            case "global":
+                this._def.icon = "loopflow.png";
+                break;
+            case "protected":
+                this._def.icon = "loopflow-shield.png";
+                break;
+            case "private":
+                this._def.icon = "loopflow-locked.png";
+        }
+      }
+			return this.name||"action";
+		},
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+    info: function() {
+        return (this.name?"# "+this.name+"\n":"")+(this.info||"");
+    },
+    oneditprepare: function() {
+      this.editor = RED.editor.createEditor({
+          id: 'node-description-editor',
+          mode: 'ace/mode/markdown',
+          value: $("#node-input-info").val()
+      });
+
+      // Support looping
+      $('#node-input-prop').typedInput({
+        typeField: $("#node-input-proptype"),
+        types:['flow','global','msg'],
+        default: 'msg'
+      });
+      $('#node-input-untilprop').typedInput({
+        types:['flow','global','msg','str','num','bool'],
+        typeField: $("#node-input-untilproptype"),
+        default: 'num'
+      });
+      setTimeout(function() { // typedInput paint refresh bug
+        $('#node-input-loop').change(function(){
+          if ($(this).val() == 'none') {
+            $('.af-loop').hide();
+          }else{
+            $('.af-loop').show();
+          }
+        });
+        if ($("#node-input-loop").val() == "none") {
+          $('.af-loop').hide();
+        }else{
+          $('.af-loop').show();
+        }
+      }, 1);
+    },
+    oneditsave: function() {
+      var node = this;
+      $("#node-input-info").val(this.editor.getValue());
+      this.editor.destroy();
+      delete node.editor;
+    },
+    oneditcancel: function() {
+      this.editor.destroy();
+      delete this.editor;
+    }
+	});
+</script>
+<script type="text/javascript">
+	RED.nodes.registerType('actionflows_in', {
+		category: 'advanced',
+		color: '#E0C67E',
+		defaults: {
+      name: {value:"action in"},
+      priority: {value:"50", required:true, validate:RED.validators.number()},
+      links: {value: []},
+      scope: {value: "global"}
+		},
+		inputs:0,
+		outputs:1,
+		icon: "actionflows.png",
+    paletteLabel: "action in",
+		label: function() {
+      switch(this.scope) {
+        case "global":
+          this._def.icon = "actionflows.png";
+          break;
+        case "protected":
+          this._def.icon = "actionflows-shield.png";
+          break;
+        case "private":
+          this._def.icon = "actionflows-locked.png";
+      }
+			return this.name||"action in";
+		},
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+    oneditprepare: function() {
+      var node = this;
+      $("#node-input-priority").spinner({min:1,max:100});
+    }
+	});
+</script>
+<script type="text/javascript">
+	RED.nodes.registerType('actionflows_out', {
+		category: 'advanced',
+		color: '#E0C67E',
+    align: 'right',
+		defaults: {
+      name: {value:"action out"},
+      links: { value: [] }
+		},
+		inputs:1,
+		outputs:0,
+		icon: "actionflows.png",
+    paletteLabel: "action out",
+		label: function() {
+			return this.name||"action out";
+		},
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    }
+	});
+</script>
+<script type="text/x-red" data-template-name="actionflows">
+    <div class="form-row" id="actionflows-name">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+      <label for="node-input-scope"><i class="fa fa-random"></i> <span>Scope</span></label>
+      <select id="node-input-scope">
+          <option value="global">global</option>
+          <option value="protected">protected</option>
+          <option value="private">private</option>
+      </select>
+    </div>
+    <div class="form-row">
+        <label><i class="fa fa-rotate-right"></i> <span>Looping</span></label>
+        <select id="node-input-loop" style="width:26%; margin-right:10px;">
+          <option value="none">none</option>
+          <option value="watch">watch</option>
+          <option value="dec">decrement</option>
+          <option value="inc">increment</option>
+          <option value="inc0">inc. from zero</option>
+        </select>
+        <div class="af-loop" style="display:inline;">
+          <input type="text" id="node-input-prop" style="width:40%;">
+          <input type="hidden" id="node-input-proptype"><br/>
+        </div>
+    </div>
+    <div class="form-row af-loop">
+      <label style="text-align:right;"><span style="margin-right:3px;">Until</span></label>
+      <select id="node-input-until" style="width:26%; margin-right:10px;">
+        <option value="eq">==</option>
+        <option value="neq">!=</option>
+        <option value="lt">&lt;</option>
+        <option value="lte">&lt;=</option>
+        <option value="gt">&gt;</option>
+        <option value="gte">&gt;=</option>
+        <option value="cont">contains</option>
+        <option value="notc">not contains</option>
+      </select>
+      <input type="text" id="node-input-untilprop" style="width:40%;">
+      <input type="hidden" id="node-input-untilproptype"><br/>
+    </div>
+    <div class="form-row" style="margin-bottom: 0px;">
+      <label for="node-input-info">Description</label>
+      <a href="https://guides.github.com/features/mastering-markdown/" target="_blank" style="font-size: 0.8em; float: right;">markdown</a>
+      <input type="hidden" id="node-input-info" autofocus="autofocus">
+    </div>
+    <div class="form-row node-text-editor-row">
+        <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-description-editor"></div>
+    </div>
+    <div class="form-row" id="node-action-perf">
+        <input type="checkbox" id="node-input-perf" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-perf" style="width: 70%;">
+          <span>Debug action cycle execution time</span>
+        </label>
+    </div>
+    <div class="form-row" id="node-action-seq">
+        <input type="checkbox" id="node-input-seq" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-seq" style="width: 70%;">
+          <span>Debug invocation sequence</span>
+        </label>
+    </div>
+</script>
+<script type="text/x-red" data-template-name="actionflows_in">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+      <label for="node-input-scope"><i class="fa fa-random"></i> <span>Scope</span></label>
+      <select id="node-input-scope">
+          <option value="global">global</option>
+          <option value="protected">protected</option>
+          <option value="private">private</option>
+      </select>
+    </div>
+    <div class="form-row" id="priority-details-for">
+        <label for="node-input-priority"><i class="fa fa-flag"></i> Priority</label>
+        <input type="text" id="node-input-priority" style="text-align:end; width:50px !important">
+    </div>
+</script>
+<script type="text/x-red" data-template-name="actionflows_out">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+<script type="text/x-red" data-help-name="actionflows">
+<div style="font-size: 75%;text-align: right;font-style: italic;margin-bottom: -8px;">
+<a href="https://github.com/Steveorevo/node-red-contrib-actionflows/blob/master/README.md#node-red-contrib-actionflows" target="_blank">ActionFlows Docs</a></div>
+</script>
+<script type="text/x-red" data-help-name="actionflows_in">
+  <p>Use the <code>action in</code> node to define the start
+  of a flow segment.</p>
+  <h4>Name</h4>
+  <p>Name the node with a prefix that matches the name of an existing
+  <code>action</code> node. Use a space, underscore, hyphen or period
+  to separate the prefix from your segment&#39;s own unique name/description.
+  </p>
+  <h4>Scope</h4>
+  <p>Scope provides functionality for flows that are more commonly found in OOP
+  (object oriented programming) environments. Using scopes with ActionFlows allows
+  you to build reusable flow libraries that may act as base for other flows.
+  Regardless of the scope setting, <code>action</code> nodes will invoke all matching
+  <code>action in</code> flows that are on the same &quot;z plane&quot; (same tab
+  or within the same subflow). However, there are many benefits to using the different scope modes
+  and in different combinations. Here are the three main levels of scope which
+  define flow behaviors:</p>
+  <dl class="message-properties">
+    <dt>Global</dt>
+    <dd>The &quot;global&quot; scope is the default mode. The &quot;global&quot; setting allows you to use
+    ActionFlows across multiple tabs or within different subflows. An <code>action</code> node
+    will invoke any <code>action in</code> flow segment across the system, regardless of where
+    they are defined (within subflows or other tabs). Flows will be invoked if the
+    <code>action in</code> node&apos;s name begins with the name of the corresponding <code>action</code> node.</dd>
+    <dt>Protected</dt>
+    <dd>Using the &quot;protected&quot; scope setting for ActionFlows allows you to group
+    functionality while avoiding conflicts with common names that could occur with
+    global scope. Unlike global scope, protected scope restricts <code>action</code> and
+    corresponding <code>action in</code> nodes to the same tab. Furthermore, protected scope
+    places restrictions on accessing ActionFlows within a subflow; you may still
+    access them but must first declare a prefix that is the subflow&apos;s name. This
+    allows you to work with multiple subflows as **object instances** in a similar
+    fashion that OOP developers use classes and objects with public or private
+    methods.</dd>
+    <dt>Private</dt>
+    <dd>Private flows are useful if your actions have a commonly used name and/or you
+    wish to restrict extendability to within a subflow or tab. Unlike protected
+    scope, private scope inhibits the ability to invoke or respond to ActionFlows
+    that are defined outside of the given subflow or tab where the ActionFlows
+    exists. Using private scope helps avoid naming conflicts but prevents
+    extensibility.</dd>
+  </dl>
+  <h4>Priority</h4>
+  <p>Use the priority field to determine the priority order for the flow segment.
+  The flow segment with the lowest priority number will execute sooner than seqments
+  with higher numbers (0 to 99). It is recommend that you leave the default (50)
+  if execution order is not required. I.e. two flows with the same name will
+  will execute in priority order sequence; 45 will execute before 50, etc.</p>
+  <h3>References</h3>
+  <ul>
+       <li>The official <a href="https://github.com/Steveorevo/node-red-contrib-actionflows" target=_blank>node-red-contrib-actionflows</a> project on GitHub.</li>
+   </ul>
+</script>
+<script type="text/x-red" data-help-name="actionflows_out">
+  <p>Use the ActionFlows <code>out</code> node to define the end of a flow
+  segment.</p>
+  <h4>Name</h4>
+  <p>Name the node with a prefix that matches the name of an existing
+  <code>in</code> node or <code>action</code> node. Use a space, underscore,
+  hyphen or period to separate the prefix from your segment&#39;s own unique
+  name/description. A flow that reaches the <code>out</code> node resumes
+  execution at the original matching <code>action</code> node.
+  </p>
+  <h3>References</h3>
+  <ul>
+       <li>The official <a href="https://github.com/Steveorevo/node-red-contrib-actionflows" target=_blank>node-red-contrib-actionflows</a> project on GitHub.</li>
+   </ul>
+</script>

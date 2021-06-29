@@ -1,7 +1,7 @@
 esphome:
   name: smart_feeder
   platform: ESP8266
-  board: nodemcuv2
+  board: d1
   includes:
     - crowtail_weight_sensor.h
 
@@ -50,15 +50,11 @@ script:
             - servo.write:
                 id: pet_feeder
                 level: -100.0%
-            - delay: 1.5s
-            - servo.write:
-                id: pet_feeder
-                level: 100.0%
-            - delay: 300ms
+            - delay: 1s
             - servo.write:
                 id: pet_feeder
                 level: 0.0%
-            - delay: 5s
+            - delay: 3s
             - lambda: id(performed_rotations) += 1;
       - lambda: |-
           if(id(performed_rotations) >= 10) {
@@ -148,5 +144,5 @@ servo:
 output:
   - platform: esp8266_pwm
     id: pwm_output
-    pin: D0
-    frequency: 50 Hz
+    pin: D5
+    frequency: 50Hz

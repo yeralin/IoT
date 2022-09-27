@@ -3,7 +3,6 @@ esphome:
   platform: ESP8266
   board: nodemcuv2
 
-
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
@@ -15,42 +14,37 @@ logger:
 
 ota:
 
-# globals:
-  # - id: refill_loops
-  #   type: int
-  #   initial_value: '0'
+globals:
+  # interval component gets triggered at boot
+  - id: first_boot
+    type: bool
+    initial_value: 'true'
+  # Safety break, stop refilling after 10 minutes
+  - id: refill_loops
+    type: int
+    initial_value: '0'
 
+script:
+  - id: refill
+    then:
+      - switch.turn_on: water_pump
+      - while:
+          condition:
+            and:
+              - binary_sensor.is_off: water_level
+              - lambda: return id(refill_loops) < 120;
+          then:
+            - delay: 5s
+            - lambda: id(refill_loops) += 1;
+      - delay: 10s # Overfill to prevent jittery sensor
+      - switch.turn_off: water_pump
+      - lambda: id(refill_loops) = 0;
 
-# script:
-#   - id: refill
-#     then:
-#       - switch.turn_on: water_pump
-#       - while:
-#           condition:
-#             and:
-#               - lambda: return id(refill_loops) < 10;
-#               - binary_sensor.is_off: water_level
-#           then:
-#             - delay: 5s
-#             - lambda: id(refill_loops) += 1;
-#       - delay: 10s # Overfill to prevent jittery sensor
-#       - switch.turn_off: water_pump
-#       - lambda: |-
-#           id(is_fountain_broken) = id(refill_loops) >= 10;
-#           id(refill_loops) = 0;
-
-api:
-  reboot_timeout: 0s
-#   services:
-#     - service: refill_water
-#       then:
-#         - script.execute: refill
-
-# switch:
-#   - platform: gpio
-#     pin: D7
-#     id: water_pump
-#     restore_mode: ALWAYS_OFF
+switch:
+  - platform: gpio
+    pin: D7
+    id: water_pump
+    restore_mode: ALWAYS_OFF
 
 binary_sensor:
   - platform: gpio
@@ -58,16 +52,25 @@ binary_sensor:
     name: "Water level reached"
     id: water_level
     filters:
-      - delayed_on: 300ms
-      - delayed_off: 300ms
+      - delayed_on: 5s
+      - delayed_off: 5s
 
-# interval:
-#   - interval: 3h
-#     then:
-#       - if:
-#           condition:
-#             and:
-#               - lambda: return !id(is_fountain_broken);
-#               - binary_sensor.is_off: water_level
-#           then:
-#             - script.execute: refill
+api:
+  reboot_timeout: 0s
+  services:
+    - service: refill_water
+      then:
+        - script.execute: refill
+      
+interval:
+  - interval: 24h
+    then:
+      - if:
+          condition:
+            and:
+              - lambda: return !id(first_boot);
+              - binary_sensor.is_off: water_level
+          then:
+            - script.execute: refill
+          else:
+            - lambda: id(first_boot) = false;

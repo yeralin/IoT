@@ -113,3 +113,6 @@ venv.bak/
 config/
 tests/build/
 tests/.esphome/
+
+out
+partitions.csv

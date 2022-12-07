@@ -3,8 +3,6 @@
 using namespace esphome;
 static const char *TAG = "sensor.crowtail_weight_sensor";
 
-static const long BOWL_ZERO_WEIGHT = 8261600;
-
 class CrowtailWeightSensor : public PollingComponent, public sensor::Sensor
 {
 private:
@@ -23,8 +21,7 @@ public:
     delayMicroseconds(100);
     digitalWrite(SCL, LOW);
 
-    //setOffset(averageValue());
-    setOffset(BOWL_ZERO_WEIGHT);
+    setOffset(averageValue());
     setScale();
   }
 
@@ -48,8 +45,7 @@ public:
   {
     byte data[3];
 
-    while (digitalRead(SDA))
-      ;
+    while (digitalRead(SDA));
 
     for (byte j = 3; j--;)
     {

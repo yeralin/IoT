@@ -37,6 +37,10 @@ logger:
 
 ota:
 
+button:
+  - platform: restart
+    name: "Reset scales"
+
 script:
  - id: feed
    then:

@@ -1,7 +1,7 @@
 esphome:
   name: smart_fountain
   platform: ESP8266
-  board: nodemcuv2
+  board: d1
 
 wifi:
   ssid: !secret wifi_ssid
@@ -32,13 +32,14 @@ script:
           condition:
             and:
               - binary_sensor.is_off: water_level
-              - lambda: return id(refill_loops) < 120;
+              - lambda: return id(refill_loops) < 10;
           then:
-            - delay: 5s
+            - delay: 30s
             - lambda: id(refill_loops) += 1;
       - delay: 10s # Overfill to prevent jittery sensor
       - switch.turn_off: water_pump
-      - lambda: id(refill_loops) = 0;
+      - lambda: |-
+          id(refill_loops) = 0;
 
 switch:
   - platform: gpio
@@ -48,7 +49,7 @@ switch:
 
 binary_sensor:
   - platform: gpio
-    pin: D8
+    pin: D10
     name: "Water level reached"
     id: water_level
     filters:

@@ -23,6 +23,9 @@ globals:
   - id: refill_loops
     type: int
     initial_value: '0'
+  - id: is_refill_broken
+    type: bool
+    initial_value: 'false'
 
 script:
   - id: refill
@@ -32,13 +35,17 @@ script:
           condition:
             and:
               - binary_sensor.is_off: water_level
-              - lambda: return id(refill_loops) < 120;
+              - lambda: return id(refill_loops) < 60;
           then:
-            - delay: 5s
+            - delay: 10s
             - lambda: id(refill_loops) += 1;
       - delay: 10s # Overfill to prevent jittery sensor
       - switch.turn_off: water_pump
-      - lambda: id(refill_loops) = 0;
+      - lambda: |-
+          if (!id(water_level).state) {
+            id(is_refill_broken) = true;
+          }
+          id(refill_loops) = 0;
 
 switch:
   - platform: gpio
@@ -69,6 +76,7 @@ interval:
           condition:
             and:
               - lambda: return !id(first_boot);
+              - lambda: return !id(is_refill_broken);
               - binary_sensor.is_off: water_level
           then:
             - script.execute: refill

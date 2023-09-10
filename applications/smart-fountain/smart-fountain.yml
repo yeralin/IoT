@@ -23,44 +23,38 @@ globals:
   - id: refill_loops
     type: int
     initial_value: '0'
-  - id: is_refill_broken
+  - id: is_fountain_broken
     type: bool
     initial_value: 'false'
 
 script:
   - id: refill
     then:
+      - if:
+          condition:
+            - binary_sensor.is_on: water_level
+          then:
+            - logger.log: 'Water is already at the level, skipping...'
+            - script.stop: refill
+      - logger.log: 'Starting the script'
       - switch.turn_on: water_pump
       - while:
           condition:
             and:
               - binary_sensor.is_off: water_level
-              - lambda: return id(refill_loops) < 60;
+              - lambda: return id(refill_loops) < 120;
           then:
+            - logger.log:
+                format: 'Iteration %d'
+                args: ['id(refill_loops)']
             - delay: 10s
             - lambda: id(refill_loops) += 1;
       - delay: 10s # Overfill to prevent jittery sensor
+      - logger.log: 'Finished the script'
       - switch.turn_off: water_pump
       - lambda: |-
-          if (!id(water_level).state) {
-            id(is_refill_broken) = true;
-          }
+          id(is_fountain_broken) = !id(water_level).state;
           id(refill_loops) = 0;
-
-switch:
-  - platform: gpio
-    pin: D7
-    id: water_pump
-    restore_mode: ALWAYS_OFF
-
-binary_sensor:
-  - platform: gpio
-    pin: D8
-    name: "Water level reached"
-    id: water_level
-    filters:
-      - delayed_on: 5s
-      - delayed_off: 5s
 
 api:
   reboot_timeout: 0s
@@ -68,6 +62,26 @@ api:
     - service: refill_water
       then:
         - script.execute: refill
+
+sensor:
+  - platform: template
+    name: 'Is fountain broken'
+    lambda: 'return id(is_fountain_broken);'
+
+binary_sensor:
+  - platform: gpio
+    pin: D8
+    name: 'Water level reached'
+    id: water_level
+    filters:
+      - delayed_on: 5s
+      - delayed_off: 5s
+
+switch:
+  - platform: gpio
+    pin: D7
+    id: water_pump
+    restore_mode: ALWAYS_OFF
       
 interval:
   - interval: 24h
@@ -76,9 +90,10 @@ interval:
           condition:
             and:
               - lambda: return !id(first_boot);
-              - lambda: return !id(is_refill_broken);
+              - lambda: return !id(is_fountain_broken);
               - binary_sensor.is_off: water_level
           then:
+            - logger.log: 'Interval triggered'
             - script.execute: refill
           else:
             - lambda: id(first_boot) = false;

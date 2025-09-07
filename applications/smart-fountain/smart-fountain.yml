@@ -1,99 +1,173 @@
 esphome:
-  name: smart_fountain
-  platform: ESP8266
-  board: nodemcuv2
+  name: smart-fountain
+
+esp32:
+  variant: esp32c3
+
+globals:
+  - id: forward_pump_time # in seconds
+    type: int
+    restore_value: yes
+    initial_value: '30'
+  - id: backward_pump_time # in seconds
+    type: int
+    restore_value: yes
+    initial_value: '15'
+  - id: fountain_interval # in hours
+    type: int
+    restore_value: yes
+    initial_value: '6'
+  - id: hours_since_last_refill
+    type: int
+    restore_value: yes
+    initial_value: '0'
 
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  output_power: 8.5
 
-captive_portal:
-
-# Enable logging
 logger:
-
-ota:
-
-globals:
-  # interval component gets triggered at boot
-  - id: first_boot
-    type: bool
-    initial_value: 'true'
-  # Safety break, stop refilling after 10 minutes
-  - id: refill_loops
-    type: int
-    initial_value: '0'
-  - id: is_fountain_broken
-    type: bool
-    initial_value: 'false'
-
-script:
-  - id: refill
-    then:
-      - if:
-          condition:
-            - binary_sensor.is_on: water_level
-          then:
-            - logger.log: 'Water is already at the level, skipping...'
-            - script.stop: refill
-      - logger.log: 'Starting the script'
-      - switch.turn_on: water_pump
-      - while:
-          condition:
-            and:
-              - binary_sensor.is_off: water_level
-              - lambda: return id(refill_loops) < 120;
-          then:
-            - logger.log:
-                format: 'Iteration %d'
-                args: ['id(refill_loops)']
-            - delay: 10s
-            - lambda: id(refill_loops) += 1;
-      - delay: 10s # Overfill to prevent jittery sensor
-      - logger.log: 'Finished the script'
-      - switch.turn_off: water_pump
-      - lambda: |-
-          id(is_fountain_broken) = !id(water_level).state;
-          id(refill_loops) = 0;
 
 api:
   reboot_timeout: 0s
   services:
-    - service: refill_water
+    # Manual fountain refill trigger through HA
+    - service: fountain_refill
       then:
-        - script.execute: refill
+        - script.execute: fountain_refill_script
 
+# Number components for direct control from HA
+number:
+  - platform: template
+    name: "Forward Pump Time"
+    id: forward_time_number
+    min_value: 1
+    max_value: 120
+    step: 1
+    unit_of_measurement: "s"
+    mode: slider
+    icon: "mdi:water-pump"
+    lambda: "return id(forward_pump_time);"
+    set_action:
+      then:
+        - lambda: 'id(forward_pump_time) = x;'
+        
+  - platform: template
+    name: "Backward Pump Time"
+    id: backward_time_number
+    min_value: 1
+    max_value: 30
+    step: 1
+    unit_of_measurement: "s"
+    mode: slider
+    icon: "mdi:water-pump"
+    lambda: "return id(backward_pump_time);"
+    set_action:
+      then:
+        - lambda: 'id(backward_pump_time) = x;'
+        
+  - platform: template
+    name: "Fountain Interval"
+    id: interval_number
+    min_value: 1
+    max_value: 24
+    step: 1
+    unit_of_measurement: "h"
+    mode: slider
+    icon: "mdi:clock-outline"
+    lambda: "return id(fountain_interval);"
+    set_action:
+      then:
+        - lambda: 'id(fountain_interval) = x;'
+
+web_server:
+
+ota:
+  platform: esphome
+
+# Output pins for TB6612 motor driver
+output:
+  # PWM pin for speed control (PWMA on TB6612)
+  - platform: ledc
+    pin: 4
+    id: motor_pwm_pin
+    frequency: 1000Hz
+  
+  # Direction control pins (AIN2 and AIN1 on TB6612)
+  - platform: ledc
+    pin: 5
+    id: motor_ain2
+    frequency: 1000Hz
+
+  - platform: ledc
+    pin: 6
+    id: motor_ain1
+    frequency: 1000Hz
+  
+  # Standby pin (STBY on TB6612) - must be HIGH to enable
+  - platform: gpio
+    pin: 7
+    id: motor_standby
+
+# H-bridge fan component for TB6612 motor driver
+fan:
+  - platform: hbridge
+    id: fountain_pump
+    name: "Fountain Pump"
+    pin_a: motor_ain1
+    pin_b: motor_ain2
+    enable_pin: motor_pwm_pin
+    speed_count: 100
+
+# Template sensors to expose configuration values to HA
 sensor:
   - platform: template
-    name: 'Is fountain broken'
-    lambda: 'return id(is_fountain_broken);'
+    name: "Hours since last refill"
+    lambda: 'return id(hours_since_last_refill);'
+    unit_of_measurement: "h"
 
-binary_sensor:
-  - platform: gpio
-    pin: D8
-    name: 'Water level reached'
-    id: water_level
-    filters:
-      - delayed_on: 5s
-      - delayed_off: 5s
-
-switch:
-  - platform: gpio
-    pin: D7
-    id: water_pump
-    restore_mode: ALWAYS_OFF
+# Automation script for pump cycling
+script:
+  - id: fountain_refill_script
+    mode: restart
+    then:
+      # Pump forward using configurable time
+      - lambda: |-
+          ESP_LOGI("fountain", "Starting forward pump cycle %ds", id(forward_pump_time));
+      - output.turn_on: motor_standby
+      - fan.turn_on:
+          id: fountain_pump
+          direction: forward
+          speed: 100
+      - delay: !lambda 'return id(forward_pump_time) * 1000;'
       
+      # Stop briefly
+      - fan.turn_off: fountain_pump
+      - delay: 1s
+      
+      # Pump backward using configurable time
+      - lambda: |-
+          ESP_LOGI("fountain", "Starting backward pump cycle %ds", id(backward_pump_time));
+      - fan.turn_on:
+          id: fountain_pump
+          direction: reverse
+          speed: 100
+      - delay: !lambda 'return id(backward_pump_time) * 1000;'
+      
+      # Final stop
+      - fan.turn_off: fountain_pump
+      - output.turn_off: motor_standby
+
+# Automatic refill interval
 interval:
-  - interval: 24h
+  - interval: 1h
     then:
       - if:
           condition:
-            and:
-              - lambda: return !id(first_boot);
-              - lambda: return !id(is_fountain_broken);
-              - binary_sensor.is_off: water_level
+            - lambda: 'return id(fountain_interval) <= id(hours_since_last_refill);'
           then:
-            - logger.log: 'Interval triggered'
-            - script.execute: refill
+            - lambda: 'id(hours_since_last_refill) = 0;'
+            - script.execute: fountain_refill_script
           else:
-            - lambda: id(first_boot) = false;
+            - lambda: 'id(hours_since_last_refill) += 1;'
